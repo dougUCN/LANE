@@ -1,0 +1,9 @@
+type Query {
+    getHistogram( id:ID! ): Histogram
+    listHistograms: [ID]
+}
+
+type Mutation {
+    createHistogram( hist: HistogramInput! ): ID!
+    updateHistogram( id:ID!, hist: HistogramInput! ): ID!
+}

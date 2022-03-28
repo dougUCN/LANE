@@ -1,0 +1,11 @@
+type Histogram {
+    id: ID!
+    data: [Int]
+    nbins: Int!
+}
+
+input HistogramInput {
+    id: ID!
+    data: [Int]   
+    nbins: Int!
+}
