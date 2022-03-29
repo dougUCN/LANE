@@ -9,3 +9,6 @@ input HistogramInput {
     data: [Int]   
     nbins: Int!
 }
+
+#TODO: HistogramStatus output
+#TODO: Histogram datetime field and type field

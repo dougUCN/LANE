@@ -36,6 +36,11 @@ def update_histogram(*_, id, hist):
     in_database.save()
     return id
 
+@mutation.field("deleteHistogram")
+def delete_histogram(*_, id):
+    Histogram.objects.get(id=id).delete()
+    return id
+
 def clean_hist_input( hist ):
     return {
             'id': hist['id'],
