@@ -1,5 +1,11 @@
-from ariadne import ObjectType
+from ariadne import ObjectType, ScalarType
 from .models import Histogram
+
+datetime_scalar = ScalarType("Datetime")
+
+@datetime_scalar.serializer
+def serialize_datetime(value):
+    return value.isoformat()
 
 query = ObjectType("Query")
 
@@ -24,28 +30,36 @@ def create_histogram(*_, hist):
     #TODO: Error handling for existing histogram
     clean_hist = clean_hist_input(hist)
     Histogram.objects.create(id = clean_hist['id'], data=clean_hist['data'], nbins=clean_hist['nbins'])
-    return clean_hist['id']
+    return histogram_status(f'created hist {clean_hist["id"]}')
 
 @mutation.field("updateHistogram")
 def update_histogram(*_, id, hist):
     #TODO: Error handling for nonexistent histogram
-    data = clean_hist_input(hist).get('data')
+    new_hist = clean_hist_input(hist)
     in_database = Histogram.objects.get(id=id)
-    in_database.data = data
-    in_database.nbins = len(data)
+    in_database.data = new_hist['data']
+    in_database.nbins = len(new_hist['data'])
+    in_database.type = new_hist['type']
     in_database.save()
-    return id
+    return histogram_status(f'updated hist {id}')
 
 @mutation.field("deleteHistogram")
 def delete_histogram(*_, id):
+    #TODO: Error handling for nonexistent histogram
     Histogram.objects.get(id=id).delete()
-    return id
+    return histogram_status(f'deleted hist {id}')
+
+def histogram_status( message):
+    return {'message': message}
 
 def clean_hist_input( hist ):
+    '''Takes histogram input from graphQL resolver and prepares to put it into the database
+    '''
     return {
             'id': hist['id'],
             'data': int_to_commsep( hist.get('data') ),
-            'nbins': hist['nbins']
+            'nbins': hist['nbins'],
+            'type': hist.get('type'),
             }
 
 def int_to_commsep( list_of_ints ):

@@ -2,13 +2,19 @@ type Histogram {
     id: ID!
     data: [Int]
     nbins: Int!
+    type: String
+    created: Datetime
 }
 
 input HistogramInput {
     id: ID!
     data: [Int]   
     nbins: Int!
+    type: String
 }
 
-#TODO: HistogramStatus output
-#TODO: Histogram datetime field and type field
+type HistogramStatus {
+    message: String!
+}
+
+scalar Datetime

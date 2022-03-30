@@ -1,13 +1,28 @@
 type Query {
+    "Retrieves a histogram corresponding to [id]"
     getHistogram( id:ID! ): Histogram
+
+    "Lists all IDs of histograms in the database"
     listHistograms: [ID]
 }
 
 type Mutation {
-    createHistogram( hist: HistogramInput! ): ID!
-    updateHistogram( id:ID!, hist: HistogramInput! ): ID!
-    deleteHistogram( id:ID! ): ID!
+    "Creates a histogram in the database"
+    createHistogram( hist: HistogramInput! ): HistogramStatus!
+
+    "Updates an existing histogram"
+    updateHistogram( id:ID!, hist: HistogramInput! ): HistogramStatus!
+
+    "Deletes a histogram in the database"
+    deleteHistogram( id:ID! ): HistogramStatus!
+
+    "Confirms validity of a token"
     verifyToken(token: String!): VerifyToken
+
+    "Obtain a brand new token with renewed expiration time for non-expired tokens"
     refreshToken(token: String!): RefreshToken
+
+    "Authenticates the user and obtains a JSON Web Token"
     tokenAuth(username: String!, password:String!): TokenAuth
 }
+
