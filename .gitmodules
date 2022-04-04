@@ -1,0 +1,3 @@
+[submodule "nEDM_server/zmqLANL"]
+	path = nEDM_server/zmqLANL
+	url = https://github.com/dougUCN/zmqLANL.git
