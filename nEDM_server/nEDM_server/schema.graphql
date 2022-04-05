@@ -2,7 +2,7 @@ type Query {
     "Retrieves a histogram corresponding to [id]"
     getHistogram( id:ID! ): Histogram
 
-    "Applies filters to retrieve a list of histograms"
+    "Applies filters to retrieve a list of histograms. These filters are applied on top of one another"
     getHistograms(  ids: [ID],
                     minDate: Datetime, maxDate: Datetime,
                     minBins: Int, maxBins:Int

@@ -3,13 +3,13 @@ from .models import Histogram
 from dateutil.parser import parse as dateParse
 from django.utils.timezone import make_aware
 
+### Datetime scalar ###
+
 datetime_scalar = ScalarType("Datetime")
 
 @datetime_scalar.serializer
 def serialize_datetime(value):
     return value.isoformat()
-
-query = ObjectType("Query")
 
 @datetime_scalar.value_parser
 def parse_datetime_value(value):
@@ -20,6 +20,10 @@ def parse_datetime_value(value):
 def parse_datetime_literal(ast):
     value = str(ast.value)
     return make_aware( parse_datetime_value(value) )
+
+### Queries ###
+
+query = ObjectType("Query")
 
 @query.field("listHistograms")
 def list_histograms(*_):
@@ -57,6 +61,9 @@ def resolve_histograms(*_, ids=None, types=None,
             hist.data = commsep_to_int( hist.data )
             histograms.append(hist)
     return histograms
+
+
+### Mutations ### 
 
 mutation = ObjectType("Mutation")
 
@@ -96,8 +103,10 @@ def clean_hist_input( hist ):
     '''
     nbins = hist.get('nbins')
     data = hist.get('data')
-    if nbins is None:
+    if (nbins is None) and data:
         nbins = len(data)
+    elif data is None:
+        nbins = 0 
     return {
             'id': hist['id'],
             'data': int_to_commsep( data ),
