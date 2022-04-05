@@ -2,19 +2,26 @@ type Query {
     "Retrieves a histogram corresponding to [id]"
     getHistogram( id:ID! ): Histogram
 
+    "Applies filters to retrieve a list of histograms"
+    getHistograms(  ids: [ID],
+                    minDate: Datetime, maxDate: Datetime,
+                    minBins: Int, maxBins:Int
+                    types: [String]
+                ): [Histogram]
+
     "Lists all IDs of histograms in the database"
     listHistograms: [ID]
 }
 
 type Mutation {
     "Creates a histogram in the database"
-    createHistogram( hist: HistogramInput! ): HistogramStatus!
+    createHistogram( hist: HistogramInput! ): HistogramPayload!
 
     "Updates an existing histogram"
-    updateHistogram( id:ID!, hist: HistogramInput! ): HistogramStatus!
+    updateHistogram( id:ID!, hist: HistogramInput! ): HistogramPayload!
 
     "Deletes a histogram in the database"
-    deleteHistogram( id:ID! ): HistogramStatus!
+    deleteHistogram( id:ID! ): HistogramPayload!
 
     "Confirms validity of a token"
     verifyToken(token: String!): VerifyToken

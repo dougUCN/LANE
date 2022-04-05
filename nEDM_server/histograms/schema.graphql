@@ -9,12 +9,14 @@ type Histogram {
 input HistogramInput {
     id: ID!
     data: [Int]   
-    nbins: Int!
+    nbins: Int
     type: String
 }
 
-type HistogramStatus {
+type HistogramPayload {
     message: String!
+    success: Boolean!
 }
 
+"Datetime is in UTC"
 scalar Datetime
