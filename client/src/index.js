@@ -14,7 +14,7 @@ import {
 } from '@apollo/client';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8000/graphql'
+  uri: 'http://localhost:8000/graphql/'
 });
 
 const client = new ApolloClient({
@@ -34,3 +34,14 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// Test query to make sure connection with graphql endpoint works
+// client
+//   .query({
+//     query: gql`
+//       query{
+//         listHistograms
+//       }
+//     `
+//   })
+//   .then(result => console.log(result));
