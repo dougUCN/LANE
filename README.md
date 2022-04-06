@@ -4,7 +4,7 @@
 
 Begin with `git clone https://github.com/dougUCN/LANL_nEDM.git`
 
-## Django server backend
+## Django server backend (BE)
 
 Set up a virtual environment and install required dependencies
 ```
@@ -29,8 +29,20 @@ cd nEDM_server
 python manage.py runserver
 ```
 
-## Apollo client front end
+## Apollo client Node JS front end (FE)
 
+To get the dependencies for the FE
+
+```
+npm install
+```
+
+And to run
+
+```
+cd client
+npm start
+```
 
 
 
