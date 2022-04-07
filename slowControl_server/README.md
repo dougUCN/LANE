@@ -16,6 +16,7 @@ motor.ping() # or any other command in the library documentation below
 
 ## Switcher library documentation
 
+```
 NAME
     switcher
 
@@ -100,4 +101,4 @@ CLASSES
      |  set_velocity(self, deg_per_sec)
      |      Sets goal velocity [deg/sec] (This is "Before reduction gears" whatever that means)
      |      Note that a value of 0 [default] sets velocity to the max
-
+```
