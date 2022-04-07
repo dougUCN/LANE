@@ -1,5 +1,6 @@
 
-@[toc](Configuring the Ethernet Connection)
+# Configuring the Ethernet Connection
+
 *Tested on Ubuntu 18.04.4 LTS, Ubuntu 18.04.5 LTS*
 
 See the rc.local section to set up an ethernet connection that persists between computer reboots
@@ -10,13 +11,40 @@ This is a quick way to make sure the struck daq is talking to the computer (via 
 
 The awful flaw with this method of connection is that you have to rerun the shell script *with sudo* if the computer and/or sis3316 ever reboots. To avoid this, we use the rc.local method below, which only requires sudo during the first configuration
 
+Create shell script called `connect_ethernet.sh` with contents
+```
+#!/bin/bash
+ifconfig enp1s0 down
+ifconfig enp1s0 192.168.1.2
+ifconfig enp1s0 up
+arp -i enp1s0 -s 192.168.1.100 00:00:56:31:61:2C
+# Network TCP/UDP tuning to support high-bandwith applications
+#
+sysctl -w net.core.rmem_max=8388608
+sysctl -w net.core.wmem_max=8388608
+sysctl -w net.core.rmem_default=65536
+sysctl -w net.core.wmem_default=65536
+#
+sysctl -w net.ipv4.udp_mem='8388608 8388608 8388608'
+#
+sysctl -w net.ipv4.tcp_rmem='4096 87380 8388608'
+sysctl -w net.ipv4.tcp_wmem='4096 65536 8388608'
+sysctl -w net.ipv4.tcp_mem='8388608 8388608 8388608'
+#
+sysctl -w net.ipv4.route.flush=1
+# Change jumbo frame size
+ip link set enp1s0 mtu 9000
+arp -a
+```
+
+Then check your ethernet port names
 
 ```
 # List ethernet ports
 $ifconfig -a
 ```
 
-edit `enp1s0` in [connect_ethernet.sh](https://osf.io/yfptz/) to what `ifconfig -a` tells you. You should also change the MAC address of shell script to match the one listed on the sis3316 daq (label on the back)
+edit `enp1s0` in connect_ethernet.sh(https://osf.io/yfptz/) to what `ifconfig -a` tells you. You should also change the MAC address of shell script to match the one listed on the sis3316 daq (label on the back)
 
 ```bash
 # Use chmod to make the shell script runnable
