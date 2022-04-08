@@ -1,8 +1,12 @@
 type Query {
-    "Retrieves a histogram corresponding to [id]"
+    "Retrieves a histogram corresponding to `id`"
     getHistogram( id:ID! ): Histogram
+    
 
-    "Applies filters to retrieve a list of histograms. These filters are applied on top of one another"
+    """
+    Applies filters to retrieve a list of histograms. 
+    These filters are applied on top of one another
+    """
     getHistograms(  ids: [ID],
                     minDate: Datetime, maxDate: Datetime,
                     minBins: Int, maxBins:Int
@@ -17,7 +21,15 @@ type Mutation {
     "Creates a histogram in the database"
     createHistogram( hist: HistogramInput! ): HistogramPayload!
 
-    "Updates an existing histogram"
+    """
+    Updates an existing histogram using type `HistogramInput`
+
+    `nbins` is ignored and calculated automatically from `data`.
+
+    `type` is only updated if specified.
+
+    `ID!` in `HistogramInput` is ignored
+    """
     updateHistogram( id:ID!, hist: HistogramInput! ): HistogramPayload!
 
     "Deletes a histogram in the database"
