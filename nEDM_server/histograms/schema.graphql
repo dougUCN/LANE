@@ -11,6 +11,7 @@ input HistogramInput {
     data: [Int]   
     nbins: Int
     type: String
+    isLive: Boolean
 }
 
 type HistogramPayload {

@@ -1,7 +1,8 @@
-from ariadne import ObjectType, ScalarType
+from ariadne import QueryType, MutationType, SubscriptionType, ScalarType
 from .models import Histogram
 from dateutil.parser import parse as dateParse
 from django.utils.timezone import make_aware
+import asyncio
 
 ### Datetime scalar ###
 
@@ -23,7 +24,7 @@ def parse_datetime_literal(ast):
 
 ### Queries ###
 
-query = ObjectType("Query")
+query = QueryType()
 
 @query.field("listHistograms")
 def list_histograms(*_):
@@ -65,13 +66,14 @@ def resolve_histograms(*_, ids=None, types=None,
 
 ### Mutations ### 
 
-mutation = ObjectType("Mutation")
+mutation = MutationType()
 
 @mutation.field("createHistogram")
 def create_histogram(*_, hist):
     clean_hist = clean_hist_input(hist)
     Histogram.objects.create(id = clean_hist['id'], data=clean_hist['data'],
-                             nbins=clean_hist['nbins'], type=clean_hist['type'])
+                             nbins=clean_hist['nbins'], type=clean_hist['type'],
+                             using=clean_hist['isLive'])
     return histogram_payload(f'created hist {clean_hist["id"]}')
 
 
@@ -85,13 +87,38 @@ def update_histogram(*_, id, hist):
         in_database.nbins = len(hist.get('data'))
     if new_hist['type']:
         in_database.type = new_hist['type']
-    in_database.save()
+    in_database.save(using = new_hist['live'])
     return histogram_payload(f'updated hist {id}')
 
 @mutation.field("deleteHistogram")
-def delete_histogram(*_, id):
-    Histogram.objects.get(id=id).delete()
+def delete_histogram(*_, id, isLive):
+    Histogram.objects.get(id=id).delete(using=chooseDatabase(isLive))
     return histogram_payload(f'deleted hist {id}')
+
+### Subscriptions ###
+# subscription = SubscriptionType()
+
+# @subscription.source("getLiveHistograms")
+# async def generate_live_histograms(*_):
+#     '''Returns live histograms'''
+#     # queryset = Histogram.objects.using('live').all()
+#     # histograms = []
+#     # if queryset.exists():
+#     #     for hist in queryset:
+#     #         hist.data = commsep_to_int( hist.data )
+#     #         histograms.append(hist)
+#     # return histograms
+#     while True:
+#         await asyncio.sleep(1)
+#         # TODO: get the data from the database
+
+# @subscription.field("getLiveHistograms")
+# def resolve_live_histograms(*_, histograms):
+#     return histograms
+
+
+
+### Common histogram related functions ###
 
 def histogram_payload( message, success=True ):
     return {'message': message, 
@@ -112,8 +139,16 @@ def clean_hist_input( hist ):
             'data': int_to_commsep( data ),
             'nbins': nbins,
             'type': hist.get('type'),
+            'isLive': chooseDatabase( hist.get('isLive') ),
             }
 
+def chooseDatabase( isLive ):
+    '''Chooses whether to write to live database or default database
+    '''
+    if isLive: 
+        return "live"
+    else:
+        return "default"
 
 def int_to_commsep( list_of_ints ):
     '''Converts a list of integers into a comma separated integer list

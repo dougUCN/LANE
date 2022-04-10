@@ -17,7 +17,7 @@ When creating accounts / querying, you'll need to specify the `users` database, 
 user = User(....)
 user.save(using='users')
 
-Customer.objects.all().using('users')
+Customer.objects.using('users').all()
 ```
 
 or, in the case of creating super users
