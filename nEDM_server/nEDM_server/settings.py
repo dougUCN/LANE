@@ -87,6 +87,10 @@ DATABASES = {
     'users': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'users/users.sqlite3',
+    },
+    'live': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db_live.sqlite3',
     }
 }
 

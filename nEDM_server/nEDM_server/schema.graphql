@@ -18,7 +18,11 @@ type Query {
 }
 
 type Mutation {
-    "Creates a histogram in the database"
+    """
+    Creates a histogram in the database
+
+    IF `isLive`, alters the Live database
+    """
     createHistogram( hist: HistogramInput! ): HistogramPayload!
 
     """
@@ -29,11 +33,17 @@ type Mutation {
     `type` is only updated if specified.
 
     `ID!` in `HistogramInput` is ignored
+
+    IF `isLive`, alters the Live database
     """
     updateHistogram( id:ID!, hist: HistogramInput! ): HistogramPayload!
 
-    "Deletes a histogram in the database"
-    deleteHistogram( id:ID! ): HistogramPayload!
+    """
+    Deletes a histogram in the database
+
+    IF `isLive`, alters the Live database
+    """
+    deleteHistogram( id:ID! , isLive: Boolean): HistogramPayload!
 
     "Confirms validity of a token"
     verifyToken(token: String!): VerifyToken

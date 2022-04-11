@@ -71,23 +71,23 @@ mutation = MutationType()
 @mutation.field("createHistogram")
 def create_histogram(*_, hist):
     clean_hist = clean_hist_input(hist)
-    Histogram.objects.create(id = clean_hist['id'], data=clean_hist['data'],
-                             nbins=clean_hist['nbins'], type=clean_hist['type'],
-                             using=clean_hist['isLive'])
+    new_hist = Histogram(id = clean_hist['id'], data=clean_hist['data'],
+                             nbins=clean_hist['nbins'], type=clean_hist['type'],)
+    new_hist.save(using = clean_hist['database'])
     return histogram_payload(f'created hist {clean_hist["id"]}')
 
 
 @mutation.field("updateHistogram")
 def update_histogram(*_, id, hist):
     '''Updates non-empty fields from hist object'''
-    new_hist = clean_hist_input(hist)
+    clean_hist = clean_hist_input(hist)
     in_database = Histogram.objects.get(id=id)
-    if new_hist['data']:
-        in_database.data = new_hist['data']
+    if clean_hist['data']:
+        in_database.data = clean_hist['data']
         in_database.nbins = len(hist.get('data'))
-    if new_hist['type']:
-        in_database.type = new_hist['type']
-    in_database.save(using = new_hist['live'])
+    if clean_hist['type']:
+        in_database.type = clean_hist['type']
+    in_database.save(using = clean_hist['database'])
     return histogram_payload(f'updated hist {id}')
 
 @mutation.field("deleteHistogram")
@@ -139,7 +139,7 @@ def clean_hist_input( hist ):
             'data': int_to_commsep( data ),
             'nbins': nbins,
             'type': hist.get('type'),
-            'isLive': chooseDatabase( hist.get('isLive') ),
+            'database': chooseDatabase( hist.get('isLive') ),
             }
 
 def chooseDatabase( isLive ):
