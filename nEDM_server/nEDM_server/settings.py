@@ -80,17 +80,17 @@ WSGI_APPLICATION = 'nEDM_server.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'data': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'data.sqlite3',
     },
-    'users': {
+    'default': { # Making the users database the default as the other databases may be backed up/deleted
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'users/users.sqlite3',
     },
     'live': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_live.sqlite3',
+        'NAME': BASE_DIR / 'liveData.sqlite3',
     }
 }
 

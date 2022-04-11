@@ -27,22 +27,26 @@ def parse_datetime_literal(ast):
 query = QueryType()
 
 @query.field("listHistograms")
-def list_histograms(*_):
-    '''Lists the IDs of all histograms in the database
+def list_histograms(*_, isLive=False):
     '''
-    return Histogram.objects.all().values_list('id', flat=True)
+    Lists the IDs of all histograms in the database
+
+    If isLive, pulls from live database
+    '''
+    return Histogram.objects.using( chooseDatabase(isLive) ).all().values_list('id', flat=True)
 
 @query.field("getHistogram")
 def resolve_histogram(*_, id):
-    histogram = Histogram.objects.get(id=id)
+    histogram = Histogram.objects.using( chooseDatabase() ).get(id=id)
     histogram.data = commsep_to_int( histogram.data )
     return histogram
 
 @query.field("getHistograms")
 def resolve_histograms(*_, ids=None, types=None,
                             minDate=None, maxDate=None, 
-                            minBins=None, maxBins=None):
-    queryset = Histogram.objects.all()
+                            minBins=None, maxBins=None,
+                            isLive=False):
+    queryset = Histogram.objects.using( chooseDatabase(isLive) ).all()
     if ids:
         queryset = queryset.filter(id__in=ids)
     if types:
@@ -78,21 +82,21 @@ def create_histogram(*_, hist):
 
 
 @mutation.field("updateHistogram")
-def update_histogram(*_, id, hist):
+def update_histogram(*_, hist):
     '''Updates non-empty fields from hist object'''
     clean_hist = clean_hist_input(hist)
-    in_database = Histogram.objects.get(id=id)
+    in_database = Histogram.objects.using(clean_hist['database']).get(id=clean_hist['id'])
     if clean_hist['data']:
         in_database.data = clean_hist['data']
         in_database.nbins = len(hist.get('data'))
     if clean_hist['type']:
         in_database.type = clean_hist['type']
     in_database.save(using = clean_hist['database'])
-    return histogram_payload(f'updated hist {id}')
+    return histogram_payload(f'updated hist {clean_hist["id"]}')
 
 @mutation.field("deleteHistogram")
-def delete_histogram(*_, id, isLive):
-    Histogram.objects.get(id=id).delete(using=chooseDatabase(isLive))
+def delete_histogram(*_, id, isLive=False):
+    Histogram.objects.using(chooseDatabase(isLive)).get(id=id).delete()
     return histogram_payload(f'deleted hist {id}')
 
 ### Subscriptions ###
@@ -142,13 +146,13 @@ def clean_hist_input( hist ):
             'database': chooseDatabase( hist.get('isLive') ),
             }
 
-def chooseDatabase( isLive ):
-    '''Chooses whether to write to live database or default database
+def chooseDatabase( isLive = None ):
+    '''Really janky way of choosing whether to write to live database or static database
     '''
     if isLive: 
         return "live"
     else:
-        return "default"
+        return "data"
 
 def int_to_commsep( list_of_ints ):
     '''Converts a list of integers into a comma separated integer list

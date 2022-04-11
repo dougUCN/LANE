@@ -9,39 +9,37 @@ type Query {
     """
     getHistograms(  ids: [ID],
                     minDate: Datetime, maxDate: Datetime,
-                    minBins: Int, maxBins:Int
-                    types: [String]
+                    minBins: Int, maxBins:Int,
+                    types: [String], isLive: Boolean,
                 ): [Histogram]
 
     "Lists all IDs of histograms in the database"
-    listHistograms: [ID]
+    listHistograms( isLive: Boolean ): [ID]
 }
 
 type Mutation {
     """
     Creates a histogram in the database
 
-    IF `isLive`, alters the Live database
+    IF `isLive`, alters the Live database. Default = False
     """
     createHistogram( hist: HistogramInput! ): HistogramPayload!
 
     """
-    Updates an existing histogram using type `HistogramInput`
+    Updates an existing histogram with using type `HistogramInput`
 
-    `nbins` is ignored and calculated automatically from `data`.
+    `nbins` is calculated automatically from `data` if unspecified.
 
     `type` is only updated if specified.
 
-    `ID!` in `HistogramInput` is ignored
-
-    IF `isLive`, alters the Live database
+    IF `isLive`, alters the Live database. Default = False
     """
-    updateHistogram( id:ID!, hist: HistogramInput! ): HistogramPayload!
+    updateHistogram( hist: HistogramInput! ): HistogramPayload!
 
     """
     Deletes a histogram in the database
 
-    IF `isLive`, alters the Live database
+    IF `isLive`, alters the Live database. Default = False
     """
     deleteHistogram( id:ID! , isLive: Boolean): HistogramPayload!
 
