@@ -12,6 +12,8 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r dependencies.txt
 ```
+Note that if you're running a version of python > 3.6 you will have to remove
+the line that states `dataclasses==0.8` in dependencies.txt
 
 Create a file /nEDM_server/nEDM_server/security.py with the contents
 ```

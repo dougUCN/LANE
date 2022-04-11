@@ -1,3 +1,32 @@
+# Django User account creation
+
+See [this link](https://docs.djangoproject.com/en/4.0/topics/auth/default/) for documentation on django user account creation
+
+Please note that I'm using a separate database (users/users.sqlite3) for user accounts as it's likely that the default database
+gets deleted/backed up yearly
+
+For migrations applied to the user database you'll need to use
+
+```
+python manage.py migrate --database=users
+```
+
+When creating accounts / querying, you'll need to specify the `users` database, e.g.
+
+```
+user = User(....)
+user.save(using='users')
+
+Customer.objects.using('users').all()
+```
+
+or, in the case of creating super users
+
+```
+python manage.py createsuperuser --database DATABASE
+```
+
+
 # Ariadne JWT
 
 JSON Web Token for Ariadne Django

@@ -1,27 +1,47 @@
 type Query {
-    "Retrieves a histogram corresponding to [id]"
+    "Retrieves a histogram corresponding to `id`"
     getHistogram( id:ID! ): Histogram
+    
 
-    "Applies filters to retrieve a list of histograms. These filters are applied on top of one another"
+    """
+    Applies filters to retrieve a list of histograms. 
+    These filters are applied on top of one another
+    """
     getHistograms(  ids: [ID],
                     minDate: Datetime, maxDate: Datetime,
-                    minBins: Int, maxBins:Int
-                    types: [String]
+                    minBins: Int, maxBins:Int,
+                    types: [String], isLive: Boolean,
                 ): [Histogram]
 
     "Lists all IDs of histograms in the database"
-    listHistograms: [ID]
+    listHistograms( isLive: Boolean ): [ID]
 }
 
 type Mutation {
-    "Creates a histogram in the database"
+    """
+    Creates a histogram in the database
+
+    IF `isLive`, alters the Live database. Default = False
+    """
     createHistogram( hist: HistogramInput! ): HistogramPayload!
 
-    "Updates an existing histogram"
-    updateHistogram( id:ID!, hist: HistogramInput! ): HistogramPayload!
+    """
+    Updates an existing histogram with using type `HistogramInput`
 
-    "Deletes a histogram in the database"
-    deleteHistogram( id:ID! ): HistogramPayload!
+    `nbins` is calculated automatically from `data` if unspecified.
+
+    `type` is only updated if specified.
+
+    IF `isLive`, alters the Live database. Default = False
+    """
+    updateHistogram( hist: HistogramInput! ): HistogramPayload!
+
+    """
+    Deletes a histogram in the database
+
+    IF `isLive`, alters the Live database. Default = False
+    """
+    deleteHistogram( id:ID! , isLive: Boolean): HistogramPayload!
 
     "Confirms validity of a token"
     verifyToken(token: String!): VerifyToken
