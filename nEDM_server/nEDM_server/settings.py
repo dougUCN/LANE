@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from .security import *
-from users.settings import GRAPHQL_JWT
+
+# JWT Token Auth settings
+from users.settings import GRAPHQL_JWT 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ariadne_django',
     'histograms',
-    "corsheaders",
+    'corsheaders',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +75,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = 'nEDM_server.asgi.application'
 
 WSGI_APPLICATION = 'nEDM_server.wsgi.application'
 

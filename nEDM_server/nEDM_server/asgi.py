@@ -8,9 +8,24 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 """
 
 import os
+import django
+
+# Required to locate these up here before importing app-related things 
+# Otherwise daphne will not run properly
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nEDM_server.settings') 
+django.setup()
 
 from django.core.asgi import get_asgi_application
+from ariadne.asgi import GraphQL
+from .graphql_config import schema
+from django.urls import path, re_path
+from django.conf import settings
+from channels.routing import URLRouter
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nEDM_server.settings')
 
-application = get_asgi_application()
+application = URLRouter(
+    [
+        path("graphql/", GraphQL(schema, debug=settings.DEBUG)),
+        re_path(r"", get_asgi_application())
+    ]
+)

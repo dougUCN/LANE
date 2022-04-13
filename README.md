@@ -27,8 +27,8 @@ DEBUG = False # Obviously you can use True if you're in development
 Run the backend server
 
 ```
-cd nEDM_server
-python manage.py runserver
+cd nEDM_server # The directory that contains manage.py
+daphne nEDM_server.asgi:application 
 ```
 
 ## Apollo client Node JS front end (FE)

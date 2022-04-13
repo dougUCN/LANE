@@ -4,8 +4,7 @@ type Query {
     
 
     """
-    Applies filters to retrieve a list of histograms. 
-    These filters are applied on top of one another
+    Applies optional filters to retrieve a list of histograms. 
     """
     getHistograms(  ids: [ID],
                     minDate: Datetime, maxDate: Datetime,
@@ -53,3 +52,9 @@ type Mutation {
     tokenAuth(username: String!, password:String!): TokenAuth
 }
 
+type Subscription {
+    """
+    Applies optional filters to retrieve a list of live histograms. 
+    """
+    getLiveHistograms: [Histogram]
+}
