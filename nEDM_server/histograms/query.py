@@ -4,8 +4,8 @@ from channels.db import database_sync_to_async
 
 from .common import  chooseDatabase, commsep_to_int
 
-""" Asynchronous database access 
-Note that we cannot pass querysets between synchronous and asychronous instances, 
+""" Asynchronous generator for database access 
+Note that we cannot pass querysets out from the generator, 
 so we must evaluate the query set before returning
 """
 
