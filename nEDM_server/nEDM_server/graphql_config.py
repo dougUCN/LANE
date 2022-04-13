@@ -1,7 +1,7 @@
 from ariadne import make_executable_schema, load_schema_from_path, gql
-from histograms.schema import query as h_query
-from histograms.schema import mutation as h_mutation
-from histograms.schema import datetime_scalar
+from histograms.query import query as h_query
+from histograms.mutation import mutation as h_mutation
+from histograms.scalar import datetime_scalar
 from ariadne_jwt import GenericScalar
 from users.schema import mutation as u_mutation
 

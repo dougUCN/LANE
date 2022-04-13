@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ariadne_django',
     'histograms',
-    "corsheaders",
+    'corsheaders',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = 'nEDM_server.asgi.application'
 
 WSGI_APPLICATION = 'nEDM_server.wsgi.application'
 
