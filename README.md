@@ -2,49 +2,81 @@
 
 # Getting started
 
-Begin with `git clone https://github.com/dougUCN/LANL_nEDM.git`
+Begin by cloning the repository:
 
-## Django server backend (BE)
+```
+git clone https://github.com/dougUCN/LANL_nEDM.git
+```
 
-Set up a virtual environment and install required dependencies
+## Running the Django Server (BE)
+
+### 1. Setting up a virtual environment:
+
 ```
 python3 -m venv venv
 source venv/bin/activate
-pip install -r dependencies.txt
-```
-Note that if you're running a version of python > 3.6 you will have to remove
-the line that states `dataclasses==0.8` in dependencies.txt
-
-Create a file /nEDM_server/nEDM_server/security.py with the contents
-```
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ... # Just google a way to generate one
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # Obviously you can use True if you're in development
 ```
 
-Run the backend server
+Update pip to the latest version:
 
 ```
-cd nEDM_server # The directory that contains manage.py
-daphne nEDM_server.asgi:application 
+python3 -m pip install --upgrade pip
 ```
 
-## Apollo client Node JS front end (FE)
+Install dependencies
 
-To get the dependencies for the FE
+```
+python3 -m pip install -r dependencies.txt
+```
+
+**Note that if you're running a version of python > 3.6 you will have to remove
+the line that states `dataclasses==0.8` in dependencies.txt**
+
+### 2. Generating a secret key
+
+In another tab, create a file `/nEDM_server/nEDM_server/security.py`.
+
+Then, run the following code in a python interpreter:
+
+```python
+import secrets
+secrets.token_urlsafe(16) # copy the output of this line
+```
+
+Next, add the following line to `security.py`:
+
+```python
+SECRET_KEY = # <paste_your_newly_generated_key_here>
+```
+
+**SECURITY WARNING: keep the secret key used in production secret!**
+
+Finally, add the following line:
+
+```python
+DEBUG = False # use True if in development
+```
+
+**SECURITY WARNING: don't run with debug turned on in production!**
+
+### 3. Running the backend server
+
+In the directory that contains `manage.py`, run the following command to start the server:
+
+```
+daphne nEDM_server.asgi:application
+```
+
+## Running the Apollo Client (FE)
+
+Install FE dependencies
 
 ```
 npm install
 ```
 
-And to run
+In the `client` directory, run via:
 
 ```
-cd client
 npm start
 ```
-
-
-
