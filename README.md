@@ -67,9 +67,17 @@ In the directory that contains `manage.py`, run the following command to start t
 daphne nEDM_server.asgi:application
 ```
 
+Basic queries can now be tested at the graphql endpoint, located at
+
+http://127.0.0.1:8000/graphql/
+
+**Note that the forward slash at the end is MANDATORY**
+
 ## Running the Apollo Client (FE)
 
 Install FE dependencies
+
+In the root directory, run
 
 ```
 npm install
