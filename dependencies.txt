@@ -15,7 +15,6 @@ cryptography==36.0.2
 daphne==3.0.2
 dataclasses==0.8
 Django==3.2.12
-django-cors-headers==3.10.1
 graphql-core==3.1.7
 hyperlink==21.0.0
 idna==3.3

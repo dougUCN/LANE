@@ -21,11 +21,21 @@ from .graphql_config import schema
 from django.urls import path, re_path
 from django.conf import settings
 from channels.routing import URLRouter
+from channels.auth import AuthMiddlewareStack
+from starlette.middleware.cors import CORSMiddleware
 
-
-application = URLRouter(
-    [
-        path("graphql/", GraphQL(schema, debug=settings.DEBUG)),
-        re_path(r"", get_asgi_application())
-    ]
+application = AuthMiddlewareStack( 
+    URLRouter(
+        [
+            path(
+                "graphql/",
+                CORSMiddleware(
+                    GraphQL(schema, debug=settings.DEBUG),
+                    allow_origins=settings.CORS_ALLOWED_ORIGINS,
+                    allow_methods=["*"]
+            ),
+        ),
+            re_path(r"", get_asgi_application())
+        ]
+    )
 )
