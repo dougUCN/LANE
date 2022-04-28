@@ -36,12 +36,12 @@ root.render(
 reportWebVitals();
 
 // Test query to make sure connection with graphql endpoint works
-// client
-//   .query({
-//     query: gql`
-//       query{
-//         listHistograms
-//       }
-//     `
-//   })
-//   .then(result => console.log(result));
+client
+  .query({
+    query: gql`
+      query{
+        listHistograms
+      }
+    `
+  })
+  .then(result => console.log(result));
