@@ -53,5 +53,5 @@ client
     `,
   })
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-console
   .then((result) => console.log(result));

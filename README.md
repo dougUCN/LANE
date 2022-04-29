@@ -77,13 +77,13 @@ http://127.0.0.1:8000/graphql/
 
 Install FE dependencies
 
-In the root directory, run
+In the `client` directory, run
 
 ```
 npm install
 ```
 
-In the `client` directory, run via:
+then
 
 ```
 npm start

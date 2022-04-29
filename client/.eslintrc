@@ -8,6 +8,8 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "no-console": 2 // Remember, this means error!
+    "no-console": 2,
+    "eqeqeq": 2,
+    "comma-dangle": [2, "always-multiline"]
   }
 }
