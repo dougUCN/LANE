@@ -44,6 +44,7 @@ reportWebVitals();
 
 // Test query to make sure connection with graphql endpoint works
 // TODO: Remove this block once we have a working integration test
+console.log("another console");
 client
   .query({
     query: gql`
