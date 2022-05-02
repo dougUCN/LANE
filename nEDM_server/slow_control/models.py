@@ -1,3 +1,13 @@
 from django.db import models
 
-# Create your models here.
+class Device(models.Model):
+    name = models.CharField(max_length=100)
+    states = models.TextField()
+    current_state = models.TextField()
+    is_online = models.BooleanField(default = False)
+
+class Runfile(models.Model):
+    name = models.CharField(max_length=500)
+    q_order = models.PositiveIntegerField()
+    start_time = models.DateTimeField()
+    run = models.JSONField()

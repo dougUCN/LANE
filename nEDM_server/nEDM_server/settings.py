@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ariadne_django',
     'histograms',
+    'slow_control',
     'channels',
 ]
 
