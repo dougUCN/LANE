@@ -27,14 +27,14 @@ const client = new ApolloClient({
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -43,6 +43,7 @@ root.render(
 reportWebVitals();
 
 // Test query to make sure connection with graphql endpoint works
+// TODO: Remove this block once we have a working integration test
 client
   .query({
     query: gql`
@@ -51,4 +52,5 @@ client
       }
     `,
   })
-  .then((result) => console.log(result));
+  // eslint-disable-next-line no-console
+  .then(result => console.log(result));

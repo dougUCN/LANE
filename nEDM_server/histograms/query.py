@@ -20,6 +20,10 @@ def _get_histogram( id, database_name):
 @database_sync_to_async
 def _filter_histograms(ids, types, minDate, maxDate, 
                         minBins, maxBins, isLive):
+    if (all([arg is None for arg in (ids, types, minDate, maxDate, minBins, maxBins)])
+         and (isLive == False)):
+        raise ValueError("At least one field filter must be specified")   
+
     queryset = Histogram.objects.using( chooseDatabase(isLive) ).all()
     if ids:
         queryset = queryset.filter(id__in=ids)
