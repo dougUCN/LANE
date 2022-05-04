@@ -89,13 +89,15 @@ then
 npm start
 ```
 
-### 2. Setting up a pre-commit Hook
+## Contributing
+
+### 1. Setting up a pre-commit Hook
 
 In the root directory, run the following commands:
 
 ```
-cp .githooks/pre-commit .git/pre-commit
-chmod +x .git/pre-commit
+cp .githooks/pre-commit .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
 ```
 
 To ensure that the pre-commit is running correctly, create a branch with a commit that contains a `console.log`. If the commit is unsuccessful with the message: `Fix eslint errors and try again`, then the pre-commit is working correctly.
