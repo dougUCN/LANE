@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "eamodio.gitlens",
+    "dbaeumer.vscode-eslint",
+    "graphql.vscode-graphql",
+    "yzhang.markdown-all-in-one",
+    "esbenp.prettier-vscode"
+  ]
+}
