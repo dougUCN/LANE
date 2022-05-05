@@ -4,37 +4,27 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import {
-  ApolloProvider,
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  gql,
-} from "@apollo/client";
+import { Provider, Client, defaultExchanges, gql } from "urql";
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-const httpLink = createHttpLink({
-  uri: "http://localhost:8000/graphql/",
-});
-
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
+const client = new Client({
+  url: "http://localhost:8000/graphql/",
+  exchanges: defaultExchanges,
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <Provider value={client}>
       <App />
-    </ApolloProvider>
-  </React.StrictMode>
+    </Provider>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -43,12 +33,15 @@ root.render(
 reportWebVitals();
 
 // Test query to make sure connection with graphql endpoint works
+// TODO: Remove this block once we have a working integration test
 client
-  .query({
-    query: gql`
+  .query(
+    gql`
       query {
         listHistograms
       }
     `,
-  })
-  .then((result) => console.log(result));
+  )
+  .toPromise()
+  // eslint-disable-next-line no-console
+  .then(result => console.log(result));
