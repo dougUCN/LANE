@@ -3,6 +3,21 @@ cd "$(git rev-parse --show-toplevel)"
 ESLINT="client/node_modules/.bin/eslint"
 pwd
 
+staged=`git diff --name-only --cached --diff-filter=A --diff-filter=M | cat`
+pylint="c:\users\micky\appdata\local\programs\python\python310\lib\site-packages  --rcfile .pylintrc --load-plugins pylint_django --load-plugins pylint_quotes --reports=no"
+
+if [ "$staged" ]
+then
+  target=`cat "$staged" | grep '.py$'`
+else
+  target=`git diff --name-only | cat | grep '.py'`
+fi
+
+if [ "$target" ]
+then
+  $pylint "$target"
+fi
+
 if [[ ! -x "$ESLINT" ]]; then
 	  printf "\t\033[41mPlease install ESlint\033[0m (npm install eslint)\n"
 	    exit 1
