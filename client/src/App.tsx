@@ -1,8 +1,17 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { useQuery } from "urql";
+import { GetHistogramsDocument, GetHistogramsQuery } from "./generated";
 
-function App() {
+const App = () => {
+  // Test query to make sure connection with graphql endpoint works
+  // TODO: Remove this block once we have a working integration test
+  const [result] = useQuery<GetHistogramsQuery>({
+    query: GetHistogramsDocument,
+  });
+  console.log("result", result);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +30,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
