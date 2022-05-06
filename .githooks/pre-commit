@@ -22,11 +22,8 @@ if [[ ! -x "$PYLINT" ]]; then
 
       PYLINT_EXIT="$?"
 
-      # Re-add files since they may have been fixed
-      git add "${STAGED_FILES[@]}"
-
       if [[ "${PYLINT_EXIT}" == 0 ]]; then
-	        printf "\n\033[42mCOMMIT SUCCEEDED\033[0m\n"
+	        printf "\n\033[42mPYLINT PASSED, COMMIT SUCCEEDED\033[0m\n"
 	else
 		  printf "\n\033[41mCOMMIT FAILED:\033[0m Fix pylint errors and try again\n"
 		    exit 1
