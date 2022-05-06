@@ -98,14 +98,9 @@ type Mutation {
   stopRuns(stopAfterThisRun: Boolean): RunPayload!
 
   """
-  Instructs the slow control to check which devices are online
+  Instructs the slow control to recheck which devices are connected and online
   """
-  refreshOnlineDevices: DevicePayload!
-
-  """
-  Updates the properties of a device
-  """
-  updateDevice(device: Device!): DevicePayload!
+  refreshDevices: DevicePayload!
 
   """
   Updates the properties of a run

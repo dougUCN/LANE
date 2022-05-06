@@ -1,10 +1,10 @@
 from django.db import models
 
-class Device(models.Model):
-    name = models.CharField(max_length=100)
-    states = models.TextField()
-    current_state = models.TextField()
-    is_online = models.BooleanField(default = False)
+# class Device(models.Model):
+#     name = models.CharField(max_length=100)
+#     states = models.TextField()
+#     current_state = models.TextField()
+#     is_online = models.BooleanField(default = False)
 
 class Runfile(models.Model):
     name = models.CharField(max_length=500)
