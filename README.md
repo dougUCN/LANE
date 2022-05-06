@@ -73,7 +73,7 @@ http://127.0.0.1:8000/graphql/
 
 **Note that the forward slash at the end is MANDATORY**
 
-## Running the Apollo Client (FE)
+## Running the Web App (FE)
 
 ### 1. Installing FE dependencies
 
@@ -101,3 +101,21 @@ chmod +x .git/hooks/pre-commit
 ```
 
 To ensure that the pre-commit is running correctly, create a branch with a commit that contains a `console.log`. If the commit is unsuccessful with the message: `Fix eslint errors and try again`, then the pre-commit is working correctly.
+
+### 2. Working with the GraphQL Client (URQL)
+
+This project uses URQL as the GraphQL Client. For more information on how to use URQL, please refer to the [official documentation](https://formidable.com/open-source/urql/docs/basics/react-preact/#run-a-first-query).
+
+To generate types for GraphQL document declarations, run the following command in the `client` directory:
+
+```
+npm run generate
+```
+
+This will create a `generated.ts` file within the `src` directory with types and functions that can be used during development. This file is only used for development purposes and should not be checked into git in order to avoid possible merge conflicts.
+
+**Note**:
+
+Since this project uses the `typed-document-node` plugin, GraphQL Code Generator recommends that all gql document declarations should be made outside of `.ts`/`.tsx` files and in a `.graphql` file.
+
+For example, given a file named `Dog.tsx`, all graphql document declarations should reside in a corresponding `Dog.graphql` file instead. For more information, please refer to the official documentation [here](https://www.graphql-code-generator.com/docs/guides/react#apollo-and-urql).
