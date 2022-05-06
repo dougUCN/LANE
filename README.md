@@ -86,6 +86,12 @@ npm install
 then
 
 ```
+npm run generate
+```
+
+and to run the FE
+
+```
 npm start
 ```
 
