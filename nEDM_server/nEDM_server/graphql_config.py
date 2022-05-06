@@ -8,11 +8,10 @@ from users.schema import mutation as u_mutation
 
 schema_files = ["nEDM_server/schema.graphql", 
                 "histograms/schema.graphql",
-                "users/schema.graphql"]
+                "users/schema.graphql",
+                "slow_control/schema.graphql"]
 
 type_defs = []
-
-
 
 for file in schema_files:
     type_defs.append( gql( load_schema_from_path(file) ) )

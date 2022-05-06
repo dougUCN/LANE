@@ -9,5 +9,6 @@ class Device(models.Model):
 class Runfile(models.Model):
     name = models.CharField(max_length=500)
     q_order = models.PositiveIntegerField()
-    start_time = models.DateTimeField()
+    start_time = models.DateTimeField(null=True)
     run = models.JSONField()
+    runtime = models.FloatField(default = 0)
