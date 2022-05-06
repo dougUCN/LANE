@@ -28,10 +28,10 @@ limit-inference-results=100
 
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
-load-plugins=
+load-plugins=pylint_django
 
 # Pickle collected data for later comparisons.
-persistent=yes
+persistent=no
 
 # Specify a configuration file.
 #rcfile=
@@ -391,7 +391,7 @@ min-similarity-lines=4
 [IMPORTS]
 
 # Allow wildcard imports from modules that define __all__.
-allow-wildcard-with-all=no
+allow-wildcard-with-all=yes
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists

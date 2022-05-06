@@ -18,12 +18,12 @@ if [[ ! -x "$PYLINT" ]]; then
 	      exit 0
       fi
 
-      $PYLINT "${STAGED_FILES[@]}" --fix --rcfile /.lint/.pylintrc --load-plugins pylint_django
+      $PYLINT "${STAGED_FILES[@]}" --fix --rcfile /.lint/.pylintrc --load-plugins 
 
       PYLINT_EXIT="$?"
 
       if [[ "${PYLINT_EXIT}" == 0 ]]; then
-	        printf "\n\033[42mPYLINT PASSED, COMMIT SUCCEEDED\033[0m\n"
+	        printf "\n\033[42mPYLINT PASSED\033[0m\n"
 	else
 		  printf "\n\033[41mCOMMIT FAILED:\033[0m Fix pylint errors and try again\n"
 		    exit 1
