@@ -45,7 +45,7 @@ type Query {
 
   Not specifying any filters throws an error message
   """
-  getDevices(names: [String], isOnline: Boolea): Device
+  getDevices(names: [String], isOnline: Boolean): Device
 }
 
 type Mutation {
