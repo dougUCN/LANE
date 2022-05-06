@@ -1,7 +1,7 @@
 #!/bin/bash
 cd "$(git rev-parse --show-toplevel)"
 # Pylint Path is Micky's local path, feel free to change in PR 
-PYLINT = "c:\users\micky\appdata\local\programs\python\python310\lib\site-packages" 
+PYLINT = "c:\users\micky\appdata\local\programs\python\python310\lib\site-packages\pylint" 
 ESLINT="client/node_modules/.bin/eslint"
 pwd
 
@@ -18,7 +18,7 @@ if [[ ! -x "$PYLINT" ]]; then
 	      exit 0
       fi
 
-      $PYLINT "${STAGED_FILES[@]}" --fix
+      $PYLINT "${STAGED_FILES[@]}" --fix --rcfile /.lint/.pylintrc --load-plugins pylint_django
 
       PYLINT_EXIT="$?"
 
