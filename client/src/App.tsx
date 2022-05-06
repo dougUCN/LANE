@@ -10,6 +10,7 @@ const App = () => {
   const [result] = useQuery<GetHistogramsQuery>({
     query: GetHistogramsDocument,
   });
+  // eslint-disable-next-line no-console
   console.log("result", result);
 
   return (
