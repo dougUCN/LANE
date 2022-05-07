@@ -83,6 +83,8 @@ In the `client` directory, run
 npm install
 ```
 
+**Note:** Make sure the BE server is running before moving on to the next step.
+
 then
 
 ```
