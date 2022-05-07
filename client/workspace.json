@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "editor.tabSize": 2,
+    "files.exclude": {
+      "**/.git": false
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

@@ -1,2 +1,5 @@
 # Default codeowners for everything in the repo
-@dougUCN
+* @dougUCN
+
+# FE code owner
+/client/ @khyeh
