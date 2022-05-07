@@ -27,6 +27,8 @@ const App = () => {
         >
           Learn React
         </a>
+        {/* Test to see if Tailwind CSS is working */}
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
       </header>
     </div>
   );
