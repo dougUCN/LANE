@@ -10,7 +10,7 @@ if [[ ! -x "$PYLINT" ]]; then
 	    exit 1
     fi
 
-    STAGED_FILES=($(git diff --cached --name-only --diff-filter=ACM | grep ".py\{0,1\}$"))
+    STAGED_FILES=($(git diff --cached --name-only --diff-filter=ACM | grep ".py$"))
 
     echo "Checking ${#STAGED_FILES[@]} staged files for Pylint Errors..."
 
@@ -52,7 +52,7 @@ if [[ ! -x "$ESLINT" ]]; then
       git add "${STAGED_FILES[@]}"
 
       if [[ "${ESLINT_EXIT}" == 0 ]]; then
-	        printf "\n\033[42mCOMMIT SUCCEEDED\033[0m\n"
+	        printf "\n\033[42mESLINT PASSED, COMMIT SUCCEEDED\033[0m\n"
 	else
 		  printf "\n\033[41mCOMMIT FAILED:\033[0m Fix eslint errors and try again\n"
 		    exit 1
