@@ -1,5 +1,4 @@
 import logo from "./logo.svg";
-import "./App.css";
 import { useQuery } from "urql";
 import { GetHistogramsDocument, GetHistogramsQuery } from "./generated";
 
@@ -13,14 +12,14 @@ const App = () => {
   console.log("result", result);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="text-center">
+      <header className="bg-[#282c34] min-h-[100vh] flex flex-col items-center justify-center text-[calc(10px_+_2vmin)] text-white">
+        <img src={logo} className="h-[40vmin] pointer-events-none animate-spin-slow" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
-          className="App-link"
+          className="text-[#61dafb]"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
