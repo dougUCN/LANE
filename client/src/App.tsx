@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { useQuery } from "urql";
 import { GetHistogramsDocument, GetHistogramsQuery } from "./generated";
 
@@ -14,22 +12,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        {/* Test to see if Tailwind CSS is working */}
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      </header>
+      <h1>This is the Home Page of LAME</h1>
+      <p>Should probably talk about what it is and what it does here.</p>
+      <p>
+        Or we can ditch this and redirect to the LoginPage instead if the user
+        isn't authenticated.
+      </p>
+      <p>If user is authenticated maybe redirect to the ems page instead.</p>
     </div>
   );
 };

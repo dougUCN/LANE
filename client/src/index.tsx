@@ -1,10 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { Provider, Client, defaultExchanges } from "urql";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import {
+  EMSPage,
+  RunSchedulerPage,
+  ControlPanelPage,
+  LoginPage,
+} from "./routes";
+import Navigation from "./components/Navigation";
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
@@ -22,7 +30,17 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider value={client}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigation />}>
+            <Route path="/" element={<App />} />
+            <Route path="ems" element={<EMSPage />} />
+            <Route path="run-scheduler" element={<RunSchedulerPage />} />
+            <Route path="control-panel" element={<ControlPanelPage />} />
+            <Route path="login" element={<LoginPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
 );
