@@ -2,7 +2,7 @@
 Common histogram-related functions
 """
 
-def histogram_payload( message, success=True ):
+def histogram_payload( message, success ):
     return {'message': message, 
             'success': success,
             }
@@ -12,20 +12,25 @@ def clean_hist_input( hist ):
     '''
     nbins = hist.get('nbins')
     data = hist.get('data')
+
     if (nbins is None) and data:
         nbins = len(data)
     elif data is None:
         nbins = 0 
+
     return {
             'id': hist['id'],
             'data': int_to_commsep( data ),
             'nbins': nbins,
+            'name': hist.get('name'),
             'type': hist.get('type'),
             'database': chooseDatabase( hist.get('isLive') ),
             }
 
 def chooseDatabase( isLive = None ):
     '''Really janky way of choosing whether to write to live database or static database
+
+    Defaults to `data` database for histograms
     '''
     if isLive: 
         return "live"
@@ -43,4 +48,7 @@ def int_to_commsep( list_of_ints ):
 def commsep_to_int( string ):
     '''Converts a string of comma separated integers into a list of ints
     '''
-    return [int(x) for x in string.split(',')]
+    if string == '':
+        return []
+    else:
+        return [int(x) for x in string.split(',')]

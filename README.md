@@ -1,4 +1,4 @@
-# LANL nEDM Server
+# LANE (Los Alamos Neutron EDM)
 
 # Getting started
 
@@ -8,7 +8,7 @@ Begin by cloning the repository:
 git clone https://github.com/dougUCN/LANL_nEDM.git
 ```
 
-## Running the Django Server (BE)
+## LANE Server (BE)
 
 ### 1. Setting up a virtual environment:
 
@@ -34,7 +34,7 @@ the line that states `dataclasses==0.8` in dependencies.txt**
 
 ### 2. Generating a secret key
 
-In another tab, create a file `/nEDM_server/nEDM_server/security.py`.
+In another tab, create a file `/server/nEDM_server/security.py`.
 
 Then, run the following code in a python interpreter:
 
@@ -59,9 +59,9 @@ DEBUG = False # use True if in development
 
 **SECURITY WARNING: don't run with debug turned on in production!**
 
-### 3. Running the backend server
+### 3. Running the BE
 
-In the directory that contains `manage.py`, run the following command to start the server:
+In `server`, run the following command to start the BE:
 
 ```
 daphne nEDM_server.asgi:application
@@ -73,7 +73,7 @@ http://127.0.0.1:8000/graphql/
 
 **Note that the forward slash at the end is MANDATORY**
 
-## Running the Web App (FE)
+## LANE Web App (FE)
 
 ### 1. Installing FE dependencies
 
