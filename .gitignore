@@ -12,6 +12,9 @@ ENV/
 env.bak/ 
 venv.bak/ 
 
+# Personal dependencies for python
+dependencies.txt
+
 # Security settings on the server
 **/security.py
 
@@ -20,3 +23,4 @@ venv.bak/
 
 /node_modules
 
+.gitignore
