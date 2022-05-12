@@ -4,6 +4,7 @@
     "dbaeumer.vscode-eslint",
     "graphql.vscode-graphql",
     "yzhang.markdown-all-in-one",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
   ]
 }

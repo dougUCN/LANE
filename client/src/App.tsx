@@ -1,8 +1,17 @@
-import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { useQuery } from "urql";
+import { GetHistogramsDocument, GetHistogramsQuery } from "./generated";
 
-function App() {
+const App = () => {
+  // Test query to make sure connection with graphql endpoint works
+  // TODO: Remove this block once we have a working integration test
+  const [result] = useQuery<GetHistogramsQuery>({
+    query: GetHistogramsDocument,
+  });
+  // eslint-disable-next-line no-console
+  console.log("result", result);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,9 +27,11 @@ function App() {
         >
           Learn React
         </a>
+        {/* Test to see if Tailwind CSS is working */}
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
       </header>
     </div>
   );
-}
+};
 
 export default App;
