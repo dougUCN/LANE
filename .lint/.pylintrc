@@ -20,7 +20,8 @@ persistent=no
 
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
-load-plugins=
+load-plugins= pylint-django
+django-settings-module=LANL_nEDM.settings
 
 # Use multiple processes to speed up Pylint.
 jobs=4
@@ -345,7 +346,7 @@ analyse-fallback-blocks=no
 [DESIGN]
 
 # Maximum number of arguments for function / method
-max-args=7
+max-args=20
 
 # Argument names that match this expression will be ignored. Default to name
 # with leading underscore
