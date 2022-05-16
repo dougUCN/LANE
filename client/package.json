@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.4.3",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typed-document-node": "^2.2.10",
     "@graphql-codegen/typescript": "^2.4.10",
     "@graphql-codegen/typescript-operations": "^2.3.7",
-    "@kodingdotninja/use-tailwind-breakpoint": "^0.0.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
@@ -27,9 +25,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint -- --fix",
