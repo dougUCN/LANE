@@ -63,7 +63,7 @@ DEBUG = False # use True if in development
 
 ### 3. Running the BE
 
-In `server`, activate the venv, and run the following command to start the BE:
+In `server`, make sure the venv is running, and run the following command to start the BE:
 
 ```
 daphne nEDM_server.asgi:application
