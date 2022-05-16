@@ -12,6 +12,8 @@ git clone https://github.com/dougUCN/LANL_nEDM.git
 
 ### 1. Setting up a virtual environment:
 
+In the `server` directory
+
 ```
 python3 -m venv venv
 source venv/bin/activate
@@ -61,7 +63,7 @@ DEBUG = False # use True if in development
 
 ### 3. Running the BE
 
-In `server`, run the following command to start the BE:
+In `server`, activate the venv, and run the following command to start the BE:
 
 ```
 daphne nEDM_server.asgi:application
