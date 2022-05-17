@@ -1,8 +1,6 @@
 #!/bin/bash
 cd "$(git rev-parse --show-toplevel)"
-# Pylint Path is Micky's local path, feel free to change in PR 
-
-PYLINT = "c:\users\micky\appdata\local\programs\python\python310\lib\site-packages\pylint" 
+PYLINT="venv/bin/pylint" 
 ESLINT="client/node_modules/.bin/eslint"
 pwd
 
@@ -19,18 +17,11 @@ if [[ ! -x "$PYLINT" ]]; then
 	      exit 0
       fi
 
-      $PYLINT "${STAGED_FILES[@]}" --fix --rcfile /.lint/.pylintrc --load-plugins 
+      $PYLINT "${STAGED_FILES[@]}" --rcfile /.lint/.pylintrc --load-plugins 
 
       PYLINT_EXIT="$?"
 
-      if [[ "${PYLINT_EXIT}" == 0 ]]; then
-	        printf "\n\033[42mPYLINT PASSED\033[0m\n"
-	else
-		  printf "\n\033[41mCOMMIT FAILED:\033[0m Fix pylint errors and try again\n"
-		    exit 1
-	    fi
-
-	    exit $?
+ 
 
 if [[ ! -x "$ESLINT" ]]; then
 	  printf "\t\033[41mPlease install ESlint\033[0m (npm install eslint)\n"
