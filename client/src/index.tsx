@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { Provider, Client, defaultExchanges } from "urql";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
