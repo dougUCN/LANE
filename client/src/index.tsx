@@ -4,8 +4,9 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import { Provider, Client, defaultExchanges } from "urql";
+import { Provider, Client, defaultExchanges, subscriptionExchange } from "urql";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { createClient as createWSClient } from "graphql-ws";
 
 import {
   EMSPage,
@@ -20,9 +21,22 @@ import Navbar from "./components/Navbar";
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
+const wsClient = createWSClient({
+  url: "ws://localhost:8000/graphql/",
+});
+
 const client = new Client({
   url: "http://localhost:8000/graphql/",
-  exchanges: defaultExchanges,
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: operation => ({
+        subscribe: sink => ({
+          unsubscribe: wsClient.subscribe(operation, sink),
+        }),
+      }),
+    }),
+  ],
 });
 
 const root = ReactDOM.createRoot(
