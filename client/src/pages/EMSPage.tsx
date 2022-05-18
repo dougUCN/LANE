@@ -1,4 +1,3 @@
-//TODO: Set up path shortcuts
 import EMS from "../components/EMS";
 
 const EMSPage = () => {

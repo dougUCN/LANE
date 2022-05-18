@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
+import "./index.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { Provider, Client, defaultExchanges } from "urql";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
@@ -11,7 +13,7 @@ import {
   ControlPanelPage,
   LoginPage,
 } from "./pages";
-import Navigation from "./components/Navigation";
+import Navbar from "./components/Navbar";
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
@@ -31,7 +33,7 @@ root.render(
     <Provider value={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigation />}>
+          <Route path="/" element={<Navbar />}>
             <Route path="/" element={<Navigate replace to="/ems" />} />
             <Route path="ems" element={<EMSPage />} />
             <Route path="run-scheduler" element={<RunSchedulerPage />} />
