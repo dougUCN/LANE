@@ -1,6 +1,6 @@
 from ariadne import SubscriptionType
 
-from .common import  commsep_to_int
+from .common import clean_hist_output
 import asyncio
 import datetime
 
@@ -17,9 +17,18 @@ from .query import _filter_histograms
 async def source_live_histograms(obj, info):
     while True:
         await asyncio.sleep(SUB_SLEEP_TIME)
-        yield await _filter_histograms(ids=None, names=None, types=None, 
-                                        minDate=None, maxDate=None, minBins=None, 
-                                        maxBins=None, isLive=True)
+        histograms = await _filter_histograms(ids=None, names=None, types=None, 
+                                        minDate=None, maxDate=None, isLive=True)
+        if histograms:
+            for i, hist in enumerate(histograms):
+                histograms[i] = clean_hist_output(hist)
+                if histograms[i].x and histograms[i].y:
+                    histograms[i].xCurrent = histograms[i].x[-1]
+                    histograms[i].yCurrent = histograms[i].y[-1]
+            yield histograms
+        else:
+            yield None
+
 
 """
 Subscription
@@ -27,9 +36,4 @@ Subscription
 
 @subscription.field("getLiveHistograms")
 def resolve_live_histograms(histograms, info):
-    if histograms:
-        for i, hist in enumerate(histograms):
-            histograms[i].data = commsep_to_int( hist.data )
-        return histograms
-    else:
-        return []
+    return histograms
