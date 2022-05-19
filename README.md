@@ -99,7 +99,7 @@ and to run the FE
 npm start
 ```
 
-## Contributing
+# Contributing
 
 ### 1. Setting up a pre-commit Hook
 
@@ -144,7 +144,7 @@ To enable support of GraphQL Subscriptions, which require asgi servers, we utili
 
 The Ariadne-asgi application is a Starlette object, which breaks several dependencies written for vanilla Django (WSGI) and can make routing slightly tricky. Refer to documentation [here](https://www.starlette.io/)
 
-## Endpoints
+## 5. GraphQL Endpoints
 
 The websocket endpoint (for GraphQL Subscriptions) is located at [ws://localhost:8000/graphql/](ws://localhost:8000/graphql/)
 
@@ -156,7 +156,7 @@ Django default settings are such that the `/` at the end of the above urls is _m
 
 Ariadne implements [subscriptions-transport-ws](https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md) protocol for GraphQL subscriptions. Unfortunately, this is not a maintained library. Furthermore, as of May 2022 Ariadne has not implemented support for [graphql-ws](https://github.com/enisdenjo/graphql-ws), which is an active library for a similar protocol. Fundamentally, `graphql-ws` and `subscriptions-transport-ws` are different protocols, and as such any clients attempting to access the server with `graphql-ws` for subscriptions will be unsuccessful
 
-## Databases
+## 6. Databases
 
 LANE utilizes [sqlite](https://www.sqlite.org/index.html) for databases. These are locally hosted files on the production computer, which admittedly is inferior to cloud/external hosting. Unfortunately, attempting to access an externally hosted SQL database conflicts with Lab policy.
 
@@ -193,3 +193,5 @@ python manage.py migrate --database=data
 python manage.py migrate --database=live
 ...# repeat for any additional databases
 ```
+
+Note that the live db is currently in the gitignore. This is so that developers with different live tests will not push undesired data onto one another. The hosted live db file on github should remain empty (with up to date models). If you apply migrations to this db make sure to run `git add --force server/liveData.sqlite3`
