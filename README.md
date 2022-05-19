@@ -146,9 +146,8 @@ The Ariadne-asgi application is a Starlette object, which breaks several depende
 
 ## 5. GraphQL Endpoints
 
-The websocket endpoint (for GraphQL Subscriptions) is located at [ws://localhost:8000/graphql/](ws://localhost:8000/graphql/)
-
-The http endpoint (for Queries and Mutations) is located at [http://localhost:8000/graphql/](http://localhost:8000/graphql/)
+The websocket endpoint (for GraphQL Subscriptions) is located at `ws://localhost:8000/graphql/`
+The http endpoint (for Queries and Mutations) is located at `http://localhost:8000/graphql/`
 
 Django default settings are such that the `/` at the end of the above urls is _mandatory_
 
