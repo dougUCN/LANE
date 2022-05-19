@@ -155,3 +155,41 @@ Django default settings are such that the `/` at the end of the above urls is _m
 **Note**
 
 Ariadne implements [subscriptions-transport-ws](https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md) protocol for GraphQL subscriptions. Unfortunately, this is not a maintained library. Furthermore, as of May 2022 Ariadne has not implemented support for [graphql-ws](https://github.com/enisdenjo/graphql-ws), which is an active library for a similar protocol. Fundamentally, `graphql-ws` and `subscriptions-transport-ws` are different protocols, and as such any clients attempting to access the server with `graphql-ws` for subscriptions will be unsuccessful
+
+## Databases
+
+LANE utilizes [sqlite](https://www.sqlite.org/index.html) for databases. These are locally hosted files on the production computer, which admittedly is inferior to cloud/external hosting. Unfortunately, attempting to access an externally hosted SQL database conflicts with Lab policy.
+
+LANE has 3 databases:
+
+| Name      | Location                     |
+| --------- | ---------------------------- |
+| `default` | `server/users/users.sqlite3` |
+| `data`    | `server/data.sqlite3`        |
+| `live`    | `server/liveData.sqlite3`    |
+
+`default` stores only user information
+
+`live` is a db that is kept very small in size, only carrying information regarding live runs and active EMS systems.
+
+`data` stores processed data for viewing only on the web app. Large and unprocessed datafiles from experimental systems, such as the fast DAQ system, should have their own separate backup and storage.
+
+In the event that `data` grows to be very large (presumably after years of successful data collection), follow these steps to create a new database
+
+1. Move the old `data` sqlite3 file into your desired storage location (do NOT leave it in the `server` directory)
+2. In `server`, activate the venv with `source venv/bin/activate`
+3. Run `python manage.py migrate --database=data`
+
+You will now have a new empty data base
+
+**Note on migrations**
+
+During development, and changes applied to `models.py` in a django app need to be propagated to all databases. To do so, start the venv and run
+
+```bash
+python manage.py makemigrations
+python manage.py migrate # No flag needed to apply migrations to default
+python manage.py migrate --database=data
+python manage.py migrate --database=live
+...# repeat for any additional databases
+```
