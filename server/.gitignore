@@ -19,4 +19,4 @@ venv.bak/
 *.log
 
 # live sqlite database
-server/liveData.sqlite3
+liveData.sqlite3
