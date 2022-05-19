@@ -1,42 +1,49 @@
-import { useQuery, useSubscription } from "urql";
+import { useSubscription } from "urql";
 import {
   GetAllLiveHistogramsDocument,
   GetAllLiveHistogramsSubscription,
-  Histogram,
-  GetHistogramsDocument,
-  GetHistogramsQuery,
 } from "../generated";
 
-// const handleSubscription = (
-//   histograms: GetAllLiveHistogramsSubscription["getLiveHistograms"] = [],
-//   response: any,
-// ) => {
-
-//   const something = [response, ...histograms];
-//   console.log("something", something);
-//   return something;
-// };
+const handleSubscription = (
+  _liveHistograms: GetAllLiveHistogramsSubscription["getLiveHistograms"] = [],
+  response: GetAllLiveHistogramsSubscription,
+) => {
+  const incomingHistograms = response?.getLiveHistograms
+    ? response?.getLiveHistograms
+    : [];
+  return incomingHistograms;
+};
 
 const EMS = () => {
-  // const [result] = useQuery<GetHistogramsQuery>({
-  //   query: GetHistogramsDocument,
-  // });
-  const [res] = useSubscription<GetAllLiveHistogramsSubscription>(
+  const [result] = useSubscription(
     {
       query: GetAllLiveHistogramsDocument,
     },
-    // handleSubscription,
+    handleSubscription,
   );
 
-  // if (!res.data) {
-  //   return <p>No new messages</p>;
-  // }
-  console.log("res", res);
+  const liveHistograms = result.data;
+
+  if (!liveHistograms?.length) {
+    return <p>No new messages</p>;
+  }
+
   return (
-    <dl>
-      <dt>List Histograms</dt>
-      {/* <dd> {result.data?.listHistograms}</dd> */}
-    </dl>
+    <div>
+      {liveHistograms?.map(liveHistogram => (
+        <>
+          <label>{liveHistogram?.name}</label>
+          <dl>
+            <dt>X-Axis</dt>
+            <dd>{liveHistogram?.xCurrent}</dd>
+            <br />
+            <dt>Y-Axis</dt>
+            <dd>{liveHistogram?.yCurrent}</dd>
+            <br />
+          </dl>
+        </>
+      ))}
+    </div>
   );
 };
 
