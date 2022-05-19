@@ -4,7 +4,8 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import { Provider, Client, defaultExchanges } from "urql";
+import { Provider, Client, defaultExchanges, subscriptionExchange } from "urql";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import {
@@ -20,9 +21,21 @@ import Navbar from "./components/Navbar";
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
+// Need the min timeout
+// https://github.com/apollographql/subscriptions-transport-ws/issues/377#issuecomment-1000431567
+const subscriptionClient = new SubscriptionClient(
+  "ws://localhost:8000/graphql/",
+  { reconnect: true, minTimeout: 10000 },
+);
+
 const client = new Client({
   url: "http://localhost:8000/graphql/",
-  exchanges: defaultExchanges,
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: operation => subscriptionClient.request(operation),
+    }),
+  ],
 });
 
 const root = ReactDOM.createRoot(

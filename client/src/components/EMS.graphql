@@ -1,3 +1,16 @@
 query getHistograms {
   listHistograms
 }
+
+subscription getAllLiveHistograms {
+  getLiveHistograms {
+    id
+    name
+    created
+    type
+    x
+    y
+    xCurrent
+    yCurrent
+  }
+}
