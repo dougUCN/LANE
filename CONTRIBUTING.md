@@ -9,7 +9,7 @@ cp .githooks/pre-commit .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
 ```
 
-To ensure that the pre-commit is running correctly, create a branch with a commit that contains a `console.log`. If the commit is unsuccessful with the message: `Fix eslint errors and try again`, then the pre-commit is working correctly.
+To ensure that the eslint pre-commit check is running correctly, create a branch with a commit that contains a `console.log`. If the commit is unsuccessful with the message: `Fix eslint errors and try again`, then the pre-commit is working correctly.
 
 ### 2. Working with the GraphQL Client (URQL)
 
@@ -46,6 +46,7 @@ The Ariadne-asgi application is a Starlette object, which breaks several depende
 ### 5. GraphQL Endpoints
 
 The websocket endpoint (for GraphQL Subscriptions) is located at `ws://localhost:8000/graphql/`
+
 The http endpoint (for Queries and Mutations) is located at `http://localhost:8000/graphql/`
 
 Django default settings are such that the `/` at the end of the above urls is _mandatory_
