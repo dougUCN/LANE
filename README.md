@@ -61,7 +61,15 @@ DEBUG = False # use True if in development
 
 **SECURITY WARNING: don't run with debug turned on in production!**
 
-### 3. Running the BE
+### 3. Generate the live database
+
+In `server`, with venv enabled, run
+
+```bash
+python manage.py migrate --database=live
+```
+
+### 4. Running the BE
 
 In `server`, make sure the venv is running, and run the following command to start the BE:
 
@@ -144,7 +152,7 @@ To enable support of GraphQL Subscriptions, which require asgi servers, we utili
 
 The Ariadne-asgi application is a Starlette object, which breaks several dependencies written for vanilla Django (WSGI) and can make routing slightly tricky. Refer to documentation [here](https://www.starlette.io/)
 
-## 5. GraphQL Endpoints
+### 5. GraphQL Endpoints
 
 The websocket endpoint (for GraphQL Subscriptions) is located at `ws://localhost:8000/graphql/`
 The http endpoint (for Queries and Mutations) is located at `http://localhost:8000/graphql/`
@@ -155,7 +163,7 @@ Django default settings are such that the `/` at the end of the above urls is _m
 
 Ariadne implements [subscriptions-transport-ws](https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md) protocol for GraphQL subscriptions. Unfortunately, this is not a maintained library. Furthermore, as of May 2022 Ariadne has not implemented support for [graphql-ws](https://github.com/enisdenjo/graphql-ws), which is an active library for a similar protocol. Fundamentally, `graphql-ws` and `subscriptions-transport-ws` are different protocols, and as such any clients attempting to access the server with `graphql-ws` for subscriptions will be unsuccessful
 
-## 6. Databases
+### 6. Databases
 
 LANE utilizes [sqlite](https://www.sqlite.org/index.html) for databases. These are locally hosted files on the production computer, which admittedly is inferior to cloud/external hosting. Unfortunately, attempting to access an externally hosted SQL database conflicts with Lab policy.
 
