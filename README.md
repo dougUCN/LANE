@@ -133,3 +133,25 @@ For example, given a file named `Dog.tsx`, all graphql document declarations sho
 ### 3. Styling (CSS)
 
 This project uses Tailwind CSS framework for styling. To maintain consistency across the codebase, please do not create custom css files. Instead, all styling should be done in HTML/React JSX files. For more information on Tailwind CSS, please refer to the [official docs](https://tailwindcss.com/docs/utility-first) or try it out [here](https://play.tailwindcss.com/).
+
+### 4. Working with the GraphQL Server
+
+This project uses [Ariadne](https://ariadnegraphql.org/), a schema-first graphql python library.
+
+To enable support of GraphQL Subscriptions, which require asgi servers, we utilize [Django channels](https://channels.readthedocs.io/en/stable/) for the web framework
+
+**Note**
+
+The Ariadne-asgi application is a Starlette object, which breaks several dependencies written for vanilla Django (WSGI) and can make routing slightly tricky. Refer to documentation [here](https://www.starlette.io/)
+
+## Endpoints
+
+The websocket endpoint (for GraphQL Subscriptions) is located at [ws://localhost:8000/graphql/](ws://localhost:8000/graphql/)
+
+The http endpoint (for Queries and Mutations) is located at [http://localhost:8000/graphql/](http://localhost:8000/graphql/)
+
+Django default settings are such that the `/` at the end of the above urls is _mandatory_
+
+**Note**
+
+Ariadne implements [subscriptions-transport-ws](https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md) protocol for GraphQL subscriptions. Unfortunately, this is not a maintained library. Furthermore, as of May 2022 Ariadne has not implemented support for [graphql-ws](https://github.com/enisdenjo/graphql-ws), which is an active library for a similar protocol. Fundamentally, `graphql-ws` and `subscriptions-transport-ws` are different protocols, and as such any clients attempting to access the server with `graphql-ws` for subscriptions will be unsuccessful
