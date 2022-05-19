@@ -201,4 +201,4 @@ python manage.py migrate --database=live
 ...# repeat for any additional databases
 ```
 
-Note that the live db is currently in the gitignore. This is so that developers with different live tests will not push undesired data onto one another. The hosted live db file on github should remain empty (with up to date models). If you apply migrations to this db make sure to run `git add --force server/liveData.sqlite3`
+Note that the live db is currently in the gitignore. This is so that developers with different live tests will not push undesired data onto one another.
