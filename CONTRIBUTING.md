@@ -13,6 +13,8 @@ Eslint is used to check the FE code, and [python black](https://black.readthedoc
 
 To ensure that the eslint pre-commit check is running correctly, create a branch with a commit that contains a `console.log`. If the commit is unsuccessful with the message: `Fix eslint errors and try again`, then the pre-commit is working correctly.
 
+To ensure that the black pre-commit check is running correctly, create a branch with a commit that contains `print "message"` (python2 syntax will cause black to throw an error:). If the commit is unsuccessful with the message: `Fix python black errors and try again`, then the pre-commit is working correctly.
+
 Note that the black checks the `pyproject.toml` file in the root directory of the folder passed to it for configuration settings
 
 ### 2. Working with the GraphQL Client (URQL)
