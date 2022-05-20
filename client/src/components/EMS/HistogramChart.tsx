@@ -98,6 +98,9 @@ const HistogramChart = ({ histogram }: Props) => {
       return;
     }
 
+    // Since setState is async, swap may not finish before getAxisYDomain gets called
+    // This is a temporary workaround
+    // TODO: There's probably a better solution involving useEffect
     let safeRefAreaLeft = refAreaLeft;
     let safeRefAreaRight = refAreaRight;
 
