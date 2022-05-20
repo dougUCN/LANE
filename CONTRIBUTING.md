@@ -87,7 +87,7 @@ You will now have a new empty data base
 
 **Note on migrations**
 
-During development, and changes applied to `models.py` in a django app need to be propagated to all databases. To do so, start the venv and run
+During development, changes applied to `models.py` in a django app need to be propagated to all databases. To do so, start the venv and run
 
 ```bash
 python manage.py makemigrations
