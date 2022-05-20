@@ -50,14 +50,6 @@ const getAxisYDomain = (
   let safeFrom = from === null ? 1 : from; // probably better to fallback to left
   let safeTo = to === null ? 0 : to; // probably better to fallback to right
 
-  // Ensure that left value is always greater than right value
-  // Swap needs to occur when users highlight the chart from right to left
-  if (safeFrom > safeTo) {
-    let temp = safeFrom;
-    safeFrom = safeTo;
-    safeTo = temp;
-  }
-
   const refData = initialData.slice(safeFrom - 1, safeTo);
   let [bottom, top] = [refData[0][ref], refData[0][ref]];
   refData.forEach((d: Data) => {
@@ -106,14 +98,34 @@ const HistogramChart = ({ histogram }: Props) => {
       return;
     }
 
+    let safeRefAreaLeft = refAreaLeft;
+    let safeRefAreaRight = refAreaRight;
+
+    // Ensure that left value is always greater than right value
+    // Swap needs to occur when users highlight the chart from right to left
+    if (safeRefAreaLeft !== null && safeRefAreaRight !== null) {
+      if (safeRefAreaLeft > safeRefAreaRight) {
+        let temp = safeRefAreaLeft;
+        safeRefAreaLeft = safeRefAreaRight;
+        setRefAreaLeft(safeRefAreaRight);
+        safeRefAreaRight = temp;
+        setRefAreaLeft(temp);
+      }
+    }
+
     // yAxis domain
-    const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, "cost", 1);
+    const [bottom, top] = getAxisYDomain(
+      safeRefAreaLeft,
+      safeRefAreaRight,
+      "cost",
+      1,
+    );
 
     setData(data.slice());
     setRefAreaLeft(null);
     setRefAreaRight(null);
-    setLeft(refAreaLeft === null ? 0 : refAreaLeft);
-    setRight(refAreaRight === null ? 0 : refAreaRight);
+    setLeft(safeRefAreaLeft === null ? 0 : safeRefAreaLeft);
+    setRight(safeRefAreaRight === null ? 0 : safeRefAreaRight);
     setBottom(bottom);
     setTop(top);
   };
