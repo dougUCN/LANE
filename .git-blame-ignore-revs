@@ -1,0 +1,9 @@
+# Put commit ids with mass linting-related changes here
+# For more useful git blames run `git config blame.ignoreRevsFile .git-blame-ignore-revs`
+# If viewing git blame on github this file will automatically be checked
+
+# Migrate code style to python black
+7a9e1cb36eb878a20ac9120e891b7dee4a2ff46e
+
+# Precommit script indentation
+3c94912f60252f8bd22774d89fa03a8744a9b4df
