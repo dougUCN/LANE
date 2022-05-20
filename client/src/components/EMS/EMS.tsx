@@ -1,8 +1,10 @@
+import React from "react";
 import { useSubscription } from "urql";
 import {
   GetAllLiveHistogramsDocument,
   GetAllLiveHistogramsSubscription,
-} from "../generated";
+} from "../../generated";
+import HistogramChart from "./HistogramChart";
 
 const handleSubscription = (
   _liveHistograms: GetAllLiveHistogramsSubscription["getLiveHistograms"] = [],
@@ -24,25 +26,20 @@ const EMS = () => {
 
   const liveHistograms = result.data;
 
-  if (!liveHistograms?.length) {
-    return <p>No new messages</p>;
-  }
+  // if (!liveHistograms?.length) {
+  //   return <p>No new messages</p>;
+  // }
 
   return (
     <div>
-      {liveHistograms?.map(liveHistogram => (
-        <>
-          <label>{liveHistogram?.name}</label>
-          <dl>
-            <dt>X-Axis</dt>
-            <dd>{liveHistogram?.xCurrent}</dd>
-            <br />
-            <dt>Y-Axis</dt>
-            <dd>{liveHistogram?.yCurrent}</dd>
-            <br />
-          </dl>
-        </>
-      ))}
+      {/* {liveHistograms?.map(
+        (liveHistogram: typeof liveHistograms[0], index: number) => (
+          <React.Fragment key={`${liveHistogram?.id}_${index}`}>
+            <HistogramChart histogram={liveHistogram} />
+          </React.Fragment>
+        ),
+      )} */}
+      <HistogramChart histogram={null} />
     </div>
   );
 };
