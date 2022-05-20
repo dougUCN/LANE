@@ -9,7 +9,11 @@ cp .githooks/pre-commit .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
 ```
 
+Eslint is used to check the FE code, and [python black](https://black.readthedocs.io/en/stable/) is utilized to check the BE code.
+
 To ensure that the eslint pre-commit check is running correctly, create a branch with a commit that contains a `console.log`. If the commit is unsuccessful with the message: `Fix eslint errors and try again`, then the pre-commit is working correctly.
+
+Note that the black checks the `pyproject.toml` file in the root directory of the folder passed to it for configuration settings
 
 ### 2. Working with the GraphQL Client (URQL)
 
