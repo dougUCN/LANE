@@ -39,6 +39,7 @@ const EMS = () => {
             <br />
             <dt>Y-Axis</dt>
             <dd>{liveHistogram?.yCurrent}</dd>
+            <dd>{liveHistogram?.yMax}</dd>
             <br />
           </dl>
         </>

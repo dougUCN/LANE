@@ -20,5 +20,6 @@ subscription getAllLiveHistograms {
     y
     xCurrent
     yCurrent
+    yMax
   }
 }
