@@ -12,31 +12,31 @@ import {
 import { Histogram } from "../../generated";
 
 type Data = {
-  name: number;
-  cost: number;
+  x: number;
+  y: number;
 };
 
 const initialData: Data[] = [
-  { name: 1, cost: 4.11 },
-  { name: 2, cost: 2.39 },
-  { name: 3, cost: 1.37 },
-  { name: 4, cost: 1.16 },
-  { name: 5, cost: 2.29 },
-  { name: 6, cost: 3 },
-  { name: 7, cost: 0.5 },
-  { name: 8, cost: 2.52 },
-  { name: 9, cost: 1.79 },
-  { name: 10, cost: 2.94 },
-  { name: 11, cost: 4.3 },
-  { name: 12, cost: 4.41 },
-  { name: 13, cost: 2 },
-  { name: 14, cost: 8 },
-  { name: 15, cost: 0 },
-  { name: 16, cost: 9 },
-  { name: 17, cost: 3 },
-  { name: 18, cost: 2 },
-  { name: 19, cost: 3 },
-  { name: 20, cost: 7 },
+  { x: 1, y: 4.11 },
+  { x: 2, y: 2.39 },
+  { x: 3, y: 1.37 },
+  { x: 4, y: 1.16 },
+  { x: 5, y: 2.29 },
+  { x: 6, y: 3 },
+  { x: 7, y: 0.5 },
+  { x: 8, y: 2.52 },
+  { x: 9, y: 1.79 },
+  { x: 10, y: 2.94 },
+  { x: 11, y: 4.3 },
+  { x: 12, y: 4.41 },
+  { x: 13, y: 2 },
+  { x: 14, y: 8 },
+  { x: 15, y: 0 },
+  { x: 16, y: 9 },
+  { x: 17, y: 3 },
+  { x: 18, y: 2 },
+  { x: 19, y: 3 },
+  { x: 20, y: 7 },
 ];
 
 const getAxisYDomain = (
@@ -120,7 +120,7 @@ const HistogramChart = ({ histogram }: Props) => {
     const [bottom, top] = getAxisYDomain(
       safeRefAreaLeft,
       safeRefAreaRight,
-      "cost",
+      "y",
       1,
     );
 
@@ -170,7 +170,7 @@ const HistogramChart = ({ histogram }: Props) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             allowDataOverflow
-            dataKey="name"
+            dataKey="x"
             domain={[left, right]}
             type="number"
           />
@@ -191,7 +191,7 @@ const HistogramChart = ({ histogram }: Props) => {
           <Line
             yAxisId="1"
             type="natural"
-            dataKey="cost"
+            dataKey="y"
             stroke="#8884d8"
             animationDuration={300}
           />
