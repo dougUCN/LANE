@@ -81,12 +81,11 @@ def createHistogram(id, x, y, name, type, isLive):
     check_response_errors(response)
     return response
 
-def getHistogram(id, x, y, name, type, isLive):
+def getHistogram(id):
     '''kwargs get directly converted to strings'''
-    replacements = {'$ID':id, '$XDATA':x, '$YDATA':y,
-                    '$NAME': name, '$TYPE': type, '$ISLIVE': isLive}
+    replacements = {'$ID':id}
     query = """query getHistogram{
-                getHistogram( id: 0){
+                getHistogram( id: $ID){
                         id
                         name
                         x
@@ -106,7 +105,7 @@ def getHistograms(id, x, y, name, type, isLive):
     replacements = {'$ID':id, '$XDATA':x, '$YDATA':y,
                     '$NAME': name, '$TYPE': type, '$ISLIVE': isLive}
     query = """query getHistogram{
-                getHistograms(  isLive:true){
+                getHistograms(  isLive:false){
                         id
                         name
                         x
