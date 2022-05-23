@@ -2,8 +2,18 @@ query getHistograms {
   getHistograms(isLive: true) {
     id
     name
-    x
-    y
+    data {
+      x
+      y
+    }
+    xrange {
+      min
+      max
+    }
+    yrange {
+      min
+      max
+    }
     len
     type
     created
@@ -16,10 +26,21 @@ subscription getAllLiveHistograms {
     name
     created
     type
-    x
-    y
-    xCurrent
-    yCurrent
-    yMax
+    data {
+      x
+      y
+    }
+    xrange {
+      min
+      max
+    }
+    yrange {
+      min
+      max
+    }
+    current {
+      x
+      y
+    }
   }
 }
