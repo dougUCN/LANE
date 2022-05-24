@@ -9,14 +9,14 @@ import {
   ReferenceArea,
   ResponsiveContainer,
 } from "recharts";
-import { Histogram } from "../../generated";
+import { LiveHistogram, Point } from "../../generated";
 
 type Data = {
   x: number;
   y: number;
 };
 
-const initialData: Data[] = [
+const initialData: Point[] = [
   { x: 1, y: 4.11 },
   { x: 2, y: 2.39 },
   { x: 3, y: 1.37 },
@@ -52,7 +52,7 @@ const getAxisYDomain = (
 
   const refData = initialData.slice(safeFrom - 1, safeTo);
   let [bottom, top] = [refData[0][ref], refData[0][ref]];
-  refData.forEach((d: Data) => {
+  refData.forEach((d: Point) => {
     if (d[ref] > top) top = d[ref];
     if (d[ref] < bottom) bottom = d[ref];
   });
@@ -61,10 +61,10 @@ const getAxisYDomain = (
 };
 
 type Props = {
-  histogram: Histogram | null;
+  liveData: Point[];
 };
 
-const HistogramChart = ({ histogram }: Props) => {
+const HistogramChart = ({ liveData }: Props) => {
   // if (!histogram) {
   //   return null;
   // }
