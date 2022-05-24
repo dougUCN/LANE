@@ -8,7 +8,7 @@ Make sure the BE is running before starting this script
 For testing options run `python spoofStaticHist.py --help`
 """
 import datetime
-from gqlComms import listHistograms, createHistogram, deleteHistogram
+from gqlComms import listHistograms, createHistogram, deleteHistogram, toSvgCoords
 import numpy as np
 import argparse
 import sys
@@ -38,14 +38,15 @@ def main():
     args = parser.parse_args()
 
     currentHists, response = listHistograms(isLive=False)
-    num = np.arange(args.offset, args.num + args.offset)
-    overlap = list(set(num) & set(currentHists))
+    histsToMake = np.arange(args.offset, args.num + args.offset)
+    overlap = list(set(histsToMake) & set(currentHists))
 
     if args.delete and not args.force:
         raise Exception(
-            f"""WARNING: You are about to delete histograms with IDs from {num[0]} to {num[-1]}
-Run with the --force flag to continue"""
+            f"""WARNING: You are about to delete histograms with IDs from {histsToMake[0]} to {histsToMake[-1]}
+Run with the --force flag to delete"""
         )
+
     elif args.delete and args.force:
         for id in overlap:
             deleteHistogram(id, isLive=False)
@@ -56,28 +57,30 @@ Run with the --force flag to continue"""
     if currentHists and not args.force:
         raise Exception(
             """WARNING: There currently exist histograms in the static database!
-This script will not overwrite existing histograms.
-Run with the --force flag to continue."""
+Run with the --force flag to force an overwrite."""
         )
+    elif overlap and args.force:
+        print(f"Deleting histograms {overlap}")
+        for id in overlap:
+            deleteHistogram(id, isLive=False)
+        print(f"Delete completed")
 
-    # Safeguards to make sure existing histograms are not written over
-    if overlap:
-        print(f"Existing histograms of id:{overlap} will not be overwritten")
-
-    histsToMake = [x for x in num if x not in overlap]
     now = datetime.datetime.now()
     runHeader = now.strftime("%Y%m%d_run")
 
     # PRNG
     rng = np.random.default_rng()
+    x = np.arange(args.length)
 
     # Create histograms
     print('Creating histograms')
     for id in histsToMake:
+        y = rng.integers(low=args.low, high=args.high, size=args.length)
         params = {
             'id': id,
-            'x': np.arange(args.length).tolist(),
-            'y': rng.integers(low=args.low, high=args.high, size=args.length).tolist(),
+            'data': toSvgCoords(x, y),
+            'xrange': {'min': x[0], 'max': x[-1]},
+            'yrange': {'min': args.low, 'max': args.high},
             'name': f'{runHeader}{id}',
             'type': 'static_test',
             'isLive': False,

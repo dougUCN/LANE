@@ -1,0 +1,46 @@
+query getHistograms {
+  getHistograms(isLive: true) {
+    id
+    name
+    data {
+      x
+      y
+    }
+    xrange {
+      min
+      max
+    }
+    yrange {
+      min
+      max
+    }
+    len
+    type
+    created
+  }
+}
+
+subscription getAllLiveHistograms {
+  getLiveHistograms {
+    id
+    name
+    created
+    type
+    data {
+      x
+      y
+    }
+    xrange {
+      min
+      max
+    }
+    yrange {
+      min
+      max
+    }
+    current {
+      x
+      y
+    }
+  }
+}
