@@ -39,7 +39,7 @@ the line that states `dataclasses==0.8` in dependencies.txt**
 In the directory `server`, with venv enabled, run
 
 ```
-python tests/genSecurityFile.py
+python tests/genSecurityFile.py # --debug True <-- Only use this flag if in development!
 ```
 
 **SECURITY WARNING: keep the secret key used in production secret!**
