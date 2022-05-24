@@ -26,20 +26,21 @@ const EMS = () => {
 
   const liveHistograms = result.data;
 
-  // if (!liveHistograms?.length) {
-  //   return <p>No new messages</p>;
-  // }
+  if (!liveHistograms?.length) {
+    return <p>No new messages</p>;
+  }
 
+  // printing out just one histogram for now
   return (
     <div>
       {/* {liveHistograms?.map(
         (liveHistogram: typeof liveHistograms[0], index: number) => (
           <React.Fragment key={`${liveHistogram?.id}_${index}`}>
-            <HistogramChart histogram={liveHistogram} />
+            <HistogramChart liveHistogram={liveHistogram} />
           </React.Fragment>
         ),
       )} */}
-      <HistogramChart histogram={null} />
+      <HistogramChart liveHistogram={liveHistograms[0]} />
     </div>
   );
 };
