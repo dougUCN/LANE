@@ -16,7 +16,7 @@ In the `server` directory
 
 ```
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate # Starts the venv
 ```
 
 Update pip to the latest version:
@@ -36,28 +36,13 @@ the line that states `dataclasses==0.8` in dependencies.txt**
 
 ### 2. Generating a secret key
 
-In another tab, create a file `/server/nEDM_server/security.py`.
+In the directory `server`, with venv enabled, run
 
-Then, run the following code in a python interpreter:
-
-```python
-import secrets
-secrets.token_urlsafe(16) # copy the output of this line
 ```
-
-Next, add the following line to `security.py`:
-
-```python
-SECRET_KEY = # <paste_your_newly_generated_key_here>
+python tests/genSecurityFile.py
 ```
 
 **SECURITY WARNING: keep the secret key used in production secret!**
-
-Finally, add the following line:
-
-```python
-DEBUG = False # use True if in development
-```
 
 **SECURITY WARNING: don't run with debug turned on in production!**
 
