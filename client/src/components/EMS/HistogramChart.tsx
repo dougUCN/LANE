@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 import {
   LineChart,
@@ -40,8 +41,28 @@ const HistogramChart = ({ liveHistogram }: Props) => {
       className="highlight-bar-charts"
       style={{ userSelect: "none", width: "100%" }}
     >
-      <button type="button" className="btn update" onClick={() => zoomOut()}>
-        Zoom Out
+      <button
+        type="button"
+        className={clsx(
+          "bg-neutral-500",
+          "text-white",
+          "active:bg-neutral-600",
+          "font-bold",
+          "uppercase",
+          "text-xs",
+          "px-4",
+          "py-2",
+          "rounded",
+          "shadow",
+          "hover:shadow-md",
+          "outline-none",
+          "focus:outline-none",
+          "mx-3",
+          "my-3",
+        )}
+        onClick={() => zoomOut()}
+      >
+        <i className="fas fa-search-minus"></i> Reset Zoom
       </button>
 
       <ResponsiveContainer width="100%" height={400}>
@@ -72,6 +93,13 @@ const HistogramChart = ({ liveHistogram }: Props) => {
             type="number"
             yAxisId="1"
           />
+          <YAxis
+            orientation="right"
+            allowDataOverflow
+            domain={[bottom, top]}
+            type="number"
+            yAxisId="2"
+          />
           <Tooltip />
           <Line
             yAxisId="1"
@@ -79,7 +107,7 @@ const HistogramChart = ({ liveHistogram }: Props) => {
             dot={false}
             dataKey="y"
             stroke="#8884d8"
-            animationDuration={300}
+            isAnimationActive={false}
           />
 
           {refAreaLeft && refAreaRight ? (

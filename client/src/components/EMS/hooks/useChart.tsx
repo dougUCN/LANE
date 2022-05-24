@@ -15,7 +15,7 @@ const useChart = (liveHistogram: LiveHistogram | null) => {
     previousDataValueRef.current = dataFromProps;
   });
 
-  const rightFromProps = liveHistogram?.xrange.max || 0 + 10;
+  const rightFromProps = liveHistogram?.xrange.max ?? 10;
 
   const [left, setLeft] = React.useState<number>(0); // x-axis min
   const [right, setRight] = React.useState<number>(rightFromProps); // x-axis max
@@ -23,7 +23,7 @@ const useChart = (liveHistogram: LiveHistogram | null) => {
   const previousRightValueRef = React.useRef<number>();
   const previousRightValue = previousRightValueRef.current;
   if (rightFromProps !== previousRightValue && rightFromProps !== right) {
-    setRight(right);
+    setRight(rightFromProps);
   }
 
   React.useEffect(() => {
@@ -33,13 +33,13 @@ const useChart = (liveHistogram: LiveHistogram | null) => {
   const [refAreaLeft, setRefAreaLeft] = React.useState<number | null>(null); // x-axis on mouse click
   const [refAreaRight, setRefAreaRight] = React.useState<number | null>(null); // x-axis on mouse release
 
-  const topFromProps = liveHistogram?.yrange.max || 0 + 10;
+  const topFromProps = liveHistogram?.yrange.max ?? 0;
   const [top, setTop] = React.useState<number>(topFromProps); // y-axis max
 
   const previousTopValueRef = React.useRef<number>();
   const previousTopValue = previousTopValueRef.current;
   if (topFromProps !== previousTopValue && topFromProps !== top) {
-    setTop(top);
+    setTop(topFromProps);
   }
 
   React.useEffect(() => {
@@ -53,8 +53,8 @@ const useChart = (liveHistogram: LiveHistogram | null) => {
     setRefAreaLeft(null);
     setRefAreaRight(null);
     setLeft(0);
-    setRight(right);
-    setTop(top);
+    setRight(rightFromProps);
+    setTop(topFromProps);
     setBottom(0);
   };
 

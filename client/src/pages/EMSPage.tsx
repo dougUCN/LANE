@@ -1,12 +1,7 @@
 import EMS from "../components/EMS/EMS";
 
 const EMSPage = () => {
-  return (
-    <div>
-      This is the EMS Page
-      <EMS />
-    </div>
-  );
+  return <EMS />;
 };
 
 export default EMSPage;
