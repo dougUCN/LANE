@@ -52,5 +52,5 @@ jobs:
           sleep 2
       
       - name: Pytest on BE
-          working-directory: server
-          pytest tests
+        working-directory: server
+        run: pytest tests
