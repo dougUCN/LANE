@@ -32,9 +32,9 @@ jobs:
         run: |
           python3 -m venv venv
           source venv/bin/activate
-          echo "VIRTUAL ENV:" $VIRTUAL_ENV
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r dependencies.txt
+          pip -V
+          pip install --upgrade pip
+          pip install -r dependencies.txt
 
       - name: Python black formatting check
         working-directory: server
@@ -42,7 +42,7 @@ jobs:
 
       - name: Generate secret key and security file
         working-directory: server
-        run: python3 tests/genSecurityFile.py --debug True
+        run: python tests/genSecurityFile.py --debug True
 
       - name: Generate live database
         working-directory: server
