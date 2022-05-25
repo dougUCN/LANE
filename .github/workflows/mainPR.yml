@@ -10,7 +10,6 @@ on:
 env: # Note that env variables are only accessible from within a `steps` context
   PYTHON_VERSION: 3.6.9
   NODE_VERSION: 16
-  FE_ENDPOINT: http://localhost:3000/
 
 jobs:
   python_black_checks:
