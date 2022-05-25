@@ -15,34 +15,46 @@ env: # Note that env variables only accessible from within a `steps` context
 
 jobs:
   python_black_checks:
-    # utilize github actions super-linter with built-in python black
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
           submodules: recursive
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install python dependencies
+        working-directory: server
+        run: |
+          pip install --upgrade pip
+          pip install black
+
       - name: Python black code check
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: ${{ env.LINTING_BRANCH }}
-          FILTER_REGEX_INCLUDE: .*server/.* # Only lint inside server folder
-          VALIDATE_PYTHON_BLACK: true
-          PYTHON_BLACK_CONFIG_FILE: server/pyproject.toml
+        working-directory: server
+        run: black . --check
 
   eslint_checks:
-    # utilize github actions super-linter with built-in eslint
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: ESlint code check
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: ${{ env.LINTING_BRANCH }}
-          FILTER_REGEX_INCLUDE: .*client/src/**/*.{ts,tsx} # Only lint typescript in client/src
-          VALIDATE_TYPESCRIPT_ES: true
-          TYPESCRIPT_ES_CONFIG_FILE: client.eslintrc
+
+      - name: Set up Node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Node dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Eslint code check
+        working-directory: client
+        run: npm run lint:pr
 
   BE_server_runs_and_passes_tests:
     runs-on: ubuntu-20.04
@@ -131,4 +143,4 @@ jobs:
 
       - name: Ping FE
         working-directory: client
-        run: curl ${{ env.FE_ENDPOINT }} -I
+        run: curl ${{ env.FE_ENDPOINT }} -I --max-time 30
