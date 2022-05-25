@@ -11,7 +11,7 @@ env: # Note that env variables are only accessible from within a `steps` context
   NODE_VERSION: 16
 
 jobs:
-  python_black_checks:
+  python_black_check:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
@@ -34,7 +34,7 @@ jobs:
         working-directory: server
         run: black . --check
 
-  eslint_checks:
+  eslint_check:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
@@ -88,7 +88,7 @@ jobs:
 
       - name: Unit tests
         working-directory: server
-        run: pytest tests
+        run: pytest test
 
   FE_builds_successfully:
     runs-on: ubuntu-20.04
