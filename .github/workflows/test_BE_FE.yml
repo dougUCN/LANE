@@ -49,5 +49,5 @@ jobs:
         working-directory: server
         run: |
           daphne nEDM_server.asgi:application &
-          sleep(2)
+          sleep 2
           pytest tests
