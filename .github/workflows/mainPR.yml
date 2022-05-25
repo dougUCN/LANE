@@ -5,18 +5,18 @@ on:
     branches: [github_actions]
   pull_request:
     branches: [github_actions]
+  workflow_call:
 
-env:
+env: # Note that env variables only accessible from within a `steps` context
   PYTHON_VERSION: 3.6.9
   NODE_VERSION: 16
-  UBUNTU_VERSION: ubuntu-20.04
   FE_ENDPOINT: http://localhost:3000/
   LINTING_BRANCH: github_actions # Branch upon whcih to apply linters
 
 jobs:
   python_black_checks:
     # utilize github actions super-linter with built-in python black
-    runs-on: ${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
 
   eslint_checks:
     # utilize github actions super-linter with built-in eslint
-    runs-on: ${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -45,7 +45,7 @@ jobs:
           TYPESCRIPT_ES_CONFIG_FILE: client.eslintrc
 
   BE_server_runs_and_passes_tests:
-    runs-on: ${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -82,7 +82,7 @@ jobs:
         run: pytest tests
 
   FE_server_runs:
-    runs-on: ${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout repo
@@ -101,7 +101,7 @@ jobs:
           pip install --upgrade pip
           pip install -r dependencies.txt
 
-      - name: BE -- Generate secret key and security file
+      - name: Generate secret key and security file
         working-directory: server
         run: python tests/genSecurityFile.py --debug True
 
@@ -119,16 +119,16 @@ jobs:
         working-directory: client
         run: npm ci
 
-      - name: FE -- Get schema from FE and generate Tsx file
+      - name: Get schema from BE and generate Tsx file
         working-directory: client
         run: npm run generate
 
-      - name: FE -- Run FE in background
+      - name: Run FE in background
         working-directory: client
         run: |
           npm start &
           sleep 1
 
-      - name: FE -- Ping FE
+      - name: Ping FE
         working-directory: client
         run: curl ${{ env.FE_ENDPOINT }} -I
