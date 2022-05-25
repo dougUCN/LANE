@@ -8,8 +8,13 @@ name: TestBEandFE
 on:
   push:
     branches: [github_actions]
-  # pull_request:
-  #   branches: [github_actions]
+  pull_request:
+    branches: [github_actions]
+
+env:
+  PYTHON_VERSION: 3.6.9
+  NODE_VERSION: 16
+  FE_ENDPOINT: http://localhost:3000/
 
 jobs:
   runBEandFE:
@@ -22,10 +27,10 @@ jobs:
         with:
           submodules: "true"
 
-      - name: Set up Python 3.6.9
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v3
         with:
-          python-version: 3.6.9
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install python dependencies
         working-directory: server
@@ -33,24 +38,51 @@ jobs:
           pip install --upgrade pip
           pip install -r dependencies.txt
 
-      - name: Python black formatting check
+      - name: Linting -- Python black
         working-directory: server
         run: black . --check
 
-      - name: Generate secret key and security file
+      - name: BE -- Generate secret key and security file
         working-directory: server
         run: python tests/genSecurityFile.py --debug True
 
-      - name: Generate live database
+      - name: BE -- Generate live database
         working-directory: server
         run: python manage.py migrate --database=live
 
-      - name: Start BE
+      - name: Run BE in background
         working-directory: server
         run: |
           daphne nEDM_server.asgi:application &
-          sleep 2
-      
-      - name: Pytest on BE
+          sleep 1
+
+      - name: BE -- Unit tests
         working-directory: server
         run: pytest tests
+
+      - name: Set up Node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Node dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Linting -- Eslint
+        working-directory: client
+        run: npm run lint
+
+      - name: FE -- Get schema from FE and generate Tsx file
+        working-directory: client
+        run: npm run generate
+
+      - name: FE -- Run FE in background
+        working-directory: client
+        run: |
+          npm start &
+          sleep 1
+
+      - name: FE -- Ping FE
+        working-directory: client
+        run: curl ${{ env.FE_ENDPOINT }} -I
