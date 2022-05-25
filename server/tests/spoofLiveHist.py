@@ -19,81 +19,90 @@ import numpy as np
 NUMALIVE = 4
 LIVETIME = 20
 PAUSE = 5
-NCYCLES = 2
+NCYCLES = 1
 LOW = 0
-HIGH =1000
+HIGH = 1000
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('-na','--numAlive', type=int, default=NUMALIVE, 
-                        help=f'Max number of live histograms at a given moment (default={NUMALIVE})')
-    parser.add_argument('-lw','--low', type=int, default=LOW, 
-                    help=f'Smallest possible integer value in a histogram (default={LOW})')
-    parser.add_argument('-hi','--high', type=int, default=HIGH, 
-                    help=f'Largest possible integer value in a histogram (default={HIGH})')
-    parser.add_argument('-lt','--liveTime', type=int, default=LIVETIME, 
-                    help=f'Seconds histograms stay live before they are removed (default={LIVETIME})')
-    parser.add_argument('-p', '--pause', type=int, default=PAUSE,
-                    help=f'Seconds to pause between cycles (default={PAUSE})')
-    parser.add_argument('-n', '--nCycles', type=int, default=NCYCLES,
-                    help=f'Number of cycles for which this test is repeated (default={NCYCLES})')
+    parser.add_argument(
+        '-na',
+        '--numAlive',
+        type=int,
+        default=NUMALIVE,
+        help=f'Max number of live histograms at a given moment (default={NUMALIVE})',
+    )
+    parser.add_argument('-lw', '--low', type=int, default=LOW, help=f'Smallest possible integer value in a histogram (default={LOW})')
+    parser.add_argument('-hi', '--high', type=int, default=HIGH, help=f'Largest possible integer value in a histogram (default={HIGH})')
+    parser.add_argument(
+        '-lt',
+        '--liveTime',
+        type=int,
+        default=LIVETIME,
+        help=f'Seconds histograms stay live before they are removed (default={LIVETIME})',
+    )
+    parser.add_argument('-p', '--pause', type=int, default=PAUSE, help=f'Seconds to pause between cycles (default={PAUSE})')
+    parser.add_argument(
+        '-n',
+        '--nCycles',
+        type=int,
+        default=NCYCLES,
+        help=f'Number of cycles for which this test is repeated (default={NCYCLES})',
+    )
     parser.add_argument('--force', action='store_true')
     args = parser.parse_args()
 
-    
     currentHists, response = listHistograms(isLive=True)
-    numAlive = np.arange(args.numAlive)
-    overlap = list(set(numAlive) & set(currentHists))
-    
-    if currentHists and not args.force:
-        raise Exception("""WARNING: There currently exist histograms in the live database!
-This script will not overwrite existing histograms.
-Run with the --force flag to continue.""")
+    histsToMake = np.arange(args.numAlive)
+    overlap = list(set(histsToMake) & set(currentHists))
 
-    # Safeguards to make sure existing histograms are not written over
-    if overlap:
-        print(f"Existing histograms of id:{overlap} will not be overwritten")
+    if overlap and not args.force:
+        raise Exception(
+            """WARNING: There currently exist histograms in the live database!
+Run with the --force flag to force an overwrite!"""
+        )
 
-    histsToMake = [x for x in numAlive if x not in overlap]
-    
+    elif overlap and args.force:
+        print(f"Deleting histograms {overlap}")
+        for id in overlap:
+            deleteHistogram(id, isLive=True)
+        print(f"Delete completed")
 
     now = datetime.datetime.now()
     runHeader = now.strftime("%Y%m%d_run")
-    
-    
+
     # PRNG
     rng = np.random.default_rng()
+    initial_data = {id: '[' for id in histsToMake}
 
-   
     for cycle in range(args.nCycles):
         print(f'Cycle {cycle + 1}/{args.nCycles}')
         # Inialize live histograms
         print('Initializing empty live histograms')
         for id in histsToMake:
-            params ={
+            params = {
                 'id': id,
-                'x': None,
-                'y': None, 
-                'name': f'{runHeader}{id}', 
-                'type': 'live_test', 
+                'name': f'{runHeader}{id}',
+                'type': 'live_test',
+                'xrange': {'min': 0, 'max': 10},
+                'yrange': {'min': args.low, 'max': args.high},
                 'isLive': True,
             }
-            createHistogram( **params )
+            createHistogram(**params)
 
         print('Live updating histograms')
-        yData = {new_list: [] for new_list in histsToMake}
-        xData = {new_list: [] for new_list in histsToMake}
+        data = initial_data
         for t in range(args.liveTime):
             for id in histsToMake:
-                xData[id].append( t )
-                yData[id].append( rng.integers(low=args.low, high=args.high) )
-                params ={
+                y = rng.integers(low=args.low, high=args.high)
+                data[id] = data[id] + f'{{x:{t},y:{y}}},'
+
+                params = {
                     'id': id,
-                    'x': xData[id],
-                    'y': yData[id], 
-                    'name': None, 
-                    'type': None, 
+                    'data': data[id] + ']',
                     'isLive': True,
+                    'xrange': {'min': 0, 'max': t + 10},
                 }
                 updateHistogram(**params)
             time.sleep(1)
@@ -107,9 +116,9 @@ Run with the --force flag to continue.""")
             deleteHistogram(id, isLive=True)
         currentHists, response = listHistograms(isLive=True)
         print(f'Current histograms in database: {currentHists}')
-    
+
     print('Done')
-    
+
 
 if __name__ == "__main__":
     main()

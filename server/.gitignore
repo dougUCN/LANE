@@ -18,5 +18,5 @@ venv.bak/
 # Logs
 *.log
 
-# live sqlite database
-server/liveData.sqlite3
+# Live data
+liveData.sqlite3
