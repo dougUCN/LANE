@@ -49,7 +49,7 @@ def test_createHist():
             del params[key]
 
     if histogramData != params:
-        raise ValueError(params, histogramData)
+        raise ValueError("error, Data does not match!")
 
     deleteHistogram(new_id, False)
 
