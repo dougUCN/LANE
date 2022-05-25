@@ -1,6 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 import { Link, Outlet } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -71,7 +73,10 @@ const Navbar = () => {
               type="button"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <i className={"text-gray-800 dark:text-white fas fa-bars"}></i>
+              <FontAwesomeIcon
+                className="text-gray-800 dark:text-white"
+                icon={faBars}
+              />
             </button>
           </div>
           <div

@@ -1,5 +1,7 @@
 import React from "react";
 import { useSubscription } from "urql";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
 import {
   GetAllLiveHistogramsDocument,
   GetAllLiveHistogramsSubscription,
@@ -30,7 +32,7 @@ const EMS = () => {
     return (
       <div className="flex h-screen justify-center items-center">
         <div className="text-center">
-          <i className="text-gray-800 mx-4 my-8 fas fa-hourglass-end fa-4x" />
+          <FontAwesomeIcon className="mx-4 my-8 fa-4x" icon={faHourglassEnd} />
           <p>No Histograms are currently running.</p>
         </div>
       </div>
