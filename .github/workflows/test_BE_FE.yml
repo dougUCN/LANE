@@ -32,7 +32,6 @@ jobs:
         run: |
           python3 -m venv venv
           source venv/bin/activate
-          pip -V
           pip install --upgrade pip
           pip install -r dependencies.txt
 
