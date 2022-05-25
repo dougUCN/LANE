@@ -3,7 +3,7 @@
 # - Runs unit tests on the BE
 # - Runs `curl` on the FE just to make sure it started up
 
-name: Test BE and FE
+name: TestBEandFE
 
 on:
   push:
@@ -12,43 +12,45 @@ on:
   #   branches: [github_actions]
 
 jobs:
-  runBE:
+  runBEandFE:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
-  steps:
-    - uses: actions/checkout@v3
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: "true"
 
-    - name: Set up Python 3.6.9
-      working-directory: server
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.6.9
+      - name: Set up Python 3.6.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.6.9
 
-    - name: Set up venv and install dependencies
-      working-directory: server
-      run: |
-        python3 -m venv venv
-        source venv/bin/activate
-        python3 -m pip install --upgrade pip
-        python3 -m pip install -r dependencies.txt
+      - name: Set up venv and install dependencies
+        working-directory: server
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r dependencies.txt
 
-    - name: Python black formatting check
-      working-directory: server
-      run: black . --check
+      - name: Python black formatting check
+        working-directory: server
+        run: black . --check
 
-    - name: Generate secret key and security file
-      working-directory: server
-      run: python3 tests/genSecurityFile.py --debug True
+      - name: Generate secret key and security file
+        working-directory: server
+        run: python3 tests/genSecurityFile.py --debug True
 
-    - name: Generate live database
-      working-directory: server
-      run: python manage.py migrate --database=live
+      - name: Generate live database
+        working-directory: server
+        run: python manage.py migrate --database=live
 
-    - name: Start BE
-      working-directory: server
-      run: daphne nEDM_server.asgi:application &
+      - name: Start BE
+        working-directory: server
+        run: daphne nEDM_server.asgi:application &
 
-    - name: BE unit tests
-      working-directory: server
-      run: pytest tests
+      - name: BE unit tests
+        working-directory: server
+        run: pytest tests
