@@ -1,4 +1,4 @@
-name: MainPR
+name: LANE
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
   workflow_call:
 
-env: # Note that env variables only accessible from within a `steps` context
+env: # Note that env variables are only accessible from within a `steps` context
   PYTHON_VERSION: 3.6.9
   NODE_VERSION: 16
   FE_ENDPOINT: http://localhost:3000/
@@ -92,7 +92,7 @@ jobs:
         working-directory: server
         run: pytest tests
 
-  FE_server_runs:
+  FE_server_built:
     runs-on: ubuntu-20.04
 
     steps:
@@ -134,12 +134,6 @@ jobs:
         working-directory: client
         run: npm run generate
 
-      - name: Run FE in background
+      - name: Build FE
         working-directory: client
-        run: |
-          npm start &
-          sleep 1
-
-      - name: Ping FE
-        working-directory: client
-        run: curl ${{ env.FE_ENDPOINT }} -I --max-time 30
+        run: npm run build
