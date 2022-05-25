@@ -136,6 +136,36 @@ def createHistogram(id, data=None, name=None, type=None, xrange=None, yrange=Non
     return response
 
 
+def getHistogram(id):
+    '''kwargs get directly converted to strings'''
+    replacements = {'$ID': id}
+    query = """query getHistogram{
+                getHistogram( id: $ID){
+                        id
+                        data{
+                            x
+                            y
+                        }
+                        xrange{
+                            min
+                            max
+                        }
+                        yrange{
+                            min
+                            max
+                        }    
+                        name               
+                        type
+                        len
+                        created
+                    }
+                }"""
+    query = make_replacements(query, replacements)
+    response = make_query(query)
+    check_response_errors(response)
+    return response
+
+
 def updateHistogram(id, data=None, name=None, type=None, xrange=None, yrange=None, isLive=False):
     '''kwargs get directly converted to strings'''
     replacements = {'$ID': id, '$DATA': data, '$XRANGE': xrange, '$YRANGE': yrange, '$NAME': name, '$TYPE': type, '$ISLIVE': isLive}
