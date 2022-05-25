@@ -7,9 +7,9 @@ name: TestBEandFE
 
 on:
   push:
-    branches: [github_actions]
+    branches: [main]
   pull_request:
-    branches: [github_actions]
+    branches: [main]
 
 env:
   PYTHON_VERSION: 3.6.9
