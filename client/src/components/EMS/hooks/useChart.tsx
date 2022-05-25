@@ -1,51 +1,18 @@
 import React from "react";
 import { LiveHistogram, Point } from "../../../generated";
+import useStateFromProps from "./useStateFromProps";
 
 const useChart = (liveHistogram: LiveHistogram | null) => {
   const dataFromProps = liveHistogram?.data || [];
-  const [data, setData] = React.useState<Point[]>(dataFromProps);
-
-  const previousDataValueRef = React.useRef<Point[]>();
-  const previousDataValue = previousDataValueRef.current;
-  if (dataFromProps !== previousDataValue && dataFromProps !== data) {
-    setData(dataFromProps);
-  }
-
-  React.useEffect(() => {
-    previousDataValueRef.current = dataFromProps;
-  });
-
   const rightFromProps = liveHistogram?.xrange.max ?? 10;
+  const topFromProps = liveHistogram?.yrange.max ?? 0;
 
+  const [data, setData] = useStateFromProps<Point[]>(dataFromProps);
   const [left, setLeft] = React.useState<number>(0); // x-axis min
-  const [right, setRight] = React.useState<number>(rightFromProps); // x-axis max
-
-  const previousRightValueRef = React.useRef<number>();
-  const previousRightValue = previousRightValueRef.current;
-  if (rightFromProps !== previousRightValue && rightFromProps !== right) {
-    setRight(rightFromProps);
-  }
-
-  React.useEffect(() => {
-    previousRightValueRef.current = rightFromProps;
-  });
-
+  const [right, setRight] = useStateFromProps<number>(rightFromProps); // x-axis max
   const [refAreaLeft, setRefAreaLeft] = React.useState<number | null>(null); // x-axis on mouse click
   const [refAreaRight, setRefAreaRight] = React.useState<number | null>(null); // x-axis on mouse release
-
-  const topFromProps = liveHistogram?.yrange.max ?? 0;
-  const [top, setTop] = React.useState<number>(topFromProps); // y-axis max
-
-  const previousTopValueRef = React.useRef<number>();
-  const previousTopValue = previousTopValueRef.current;
-  if (topFromProps !== previousTopValue && topFromProps !== top) {
-    setTop(topFromProps);
-  }
-
-  React.useEffect(() => {
-    previousTopValueRef.current = topFromProps;
-  });
-
+  const [top, setTop] = useStateFromProps<number>(topFromProps); // y-axis max
   const [bottom, setBottom] = React.useState<number>(0); // y-axis min
 
   const zoomOut = () => {

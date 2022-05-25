@@ -1,6 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 import { Link, Outlet } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+
+import StyledLink from "./StyledLink";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -71,7 +75,10 @@ const Navbar = () => {
               type="button"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <i className={"text-gray-800 dark:text-white fas fa-bars"}></i>
+              <FontAwesomeIcon
+                className="text-gray-800 dark:text-white"
+                icon={faBars}
+              />
             </button>
           </div>
           <div
@@ -87,24 +94,16 @@ const Navbar = () => {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto last:lg:mr-0">
               <li className="flex items-center">
-                <Link to="/ems" className={styles.navLink}>
-                  EMS
-                </Link>
+                <StyledLink to="/ems">EMS</StyledLink>
               </li>
               <li className="flex items-center">
-                <Link to="/run-scheduler" className={styles.navLink}>
-                  Run Scheduler
-                </Link>
+                <StyledLink to="/run-scheduler">Run Scheduler</StyledLink>
               </li>
               <li className="flex items-center">
-                <Link to="/control-panel" className={styles.navLink}>
-                  Control Panel
-                </Link>
+                <StyledLink to="/control-panel">Control Panel</StyledLink>
               </li>
               <li className="flex items-center">
-                <Link to="/login" className={styles.navLink}>
-                  Login
-                </Link>
+                <StyledLink to="/login">Login</StyledLink>
               </li>
             </ul>
           </div>
@@ -116,23 +115,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-const styles = {
-  navLink: clsx(
-    "px-3",
-    "py-2",
-    "flex",
-    "items-center",
-    "leading-snug",
-    "text-gray-700",
-    "border-gray-100",
-    "hover:bg-gray-50",
-    "lg:hover:bg-transparent",
-    "hover:text-blue-700",
-    "dark:text-gray-400",
-    "dark:hover:bg-gray-700",
-    "dark:hover:text-white",
-    "dark:hover:bg-transparent",
-    "dark:border-gray-700",
-  ),
-};

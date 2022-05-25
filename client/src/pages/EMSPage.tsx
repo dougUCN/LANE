@@ -1,4 +1,4 @@
-import EMS from "../components/EMS/EMS";
+import EMS from "../components/EMS";
 
 const EMSPage = () => {
   return <EMS />;
