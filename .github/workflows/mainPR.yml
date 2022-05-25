@@ -74,7 +74,7 @@ jobs:
 
       - name: Generate secret key and security file
         working-directory: server
-        run: python tests/genSecurityFile.py --debug True
+        run: python test/genSecurityFile.py --debug True
 
       - name: Generate live database
         working-directory: server
@@ -112,7 +112,7 @@ jobs:
 
       - name: Generate secret key and security file
         working-directory: server
-        run: python tests/genSecurityFile.py --debug True
+        run: python test/genSecurityFile.py --debug True
 
       - name: Run BE in background
         working-directory: server
