@@ -2,16 +2,15 @@ name: MainPR
 
 on:
   push:
-    branches: [github_actions]
+    branches: [main]
   pull_request:
-    branches: [github_actions]
+    branches: [main]
   workflow_call:
 
 env: # Note that env variables only accessible from within a `steps` context
   PYTHON_VERSION: 3.6.9
   NODE_VERSION: 16
   FE_ENDPOINT: http://localhost:3000/
-  LINTING_BRANCH: github_actions # Branch upon whcih to apply linters
 
 jobs:
   python_black_checks:
