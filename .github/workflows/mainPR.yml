@@ -17,7 +17,7 @@ jobs:
   python_black_checks:
     # utilize github actions super-linter with built-in python black
     runs-on: ${{ env.UBUNTU_VERSION }}
-      steps:
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
@@ -31,9 +31,9 @@ jobs:
           PYTHON_BLACK_CONFIG_FILE: server/pyproject.toml
 
   eslint_checks:
-  # utilize github actions super-linter with built-in eslint
+    # utilize github actions super-linter with built-in eslint
     runs-on: ${{ env.UBUNTU_VERSION }}
-      steps:
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: ESlint code check
@@ -44,10 +44,9 @@ jobs:
           VALIDATE_TYPESCRIPT_ES: true
           TYPESCRIPT_ES_CONFIG_FILE: client.eslintrc
 
-
   BE_server_runs_and_passes_tests:
     runs-on: ${{ env.UBUNTU_VERSION }}
-      steps:
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
@@ -81,7 +80,6 @@ jobs:
       - name: Unit tests
         working-directory: server
         run: pytest tests
-
 
   FE_server_runs:
     runs-on: ${{ env.UBUNTU_VERSION }}
