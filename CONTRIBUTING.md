@@ -1,6 +1,6 @@
 # Contributing
 
-### 1. Setting up a pre-commit Hook
+### 1. Setting up the linting pre-commit hook
 
 In the root directory, run the following commands:
 
@@ -16,6 +16,8 @@ To ensure that the eslint pre-commit check is running correctly, create a branch
 To ensure that the black pre-commit check is running correctly, create a branch with a commit that contains `print "message"` (python2 syntax will cause black to throw an error:). If the commit is unsuccessful with the message: `Fix python black errors and try again`, then the pre-commit is working correctly.
 
 Note that the black checks the `pyproject.toml` file in the root directory of the folder passed to it for configuration settings
+
+Upon opening a pull request on `main`, linting checks will be applied with the same settings as the precommit
 
 ### 2. Working with the GraphQL Client (URQL)
 
