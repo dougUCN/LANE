@@ -1,0 +1,137 @@
+name: LANE
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env: # Note that env variables are only accessible from within a `steps` context
+  PYTHON_VERSION: 3.6.9
+  NODE_VERSION: 16
+
+jobs:
+  python_black_check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install python dependencies
+        working-directory: server
+        run: |
+          pip install --upgrade pip
+          pip install black
+
+      - name: Python black code check
+        working-directory: server
+        run: black . --check
+
+  eslint_check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Node dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Eslint code check
+        working-directory: client
+        run: npm run lint:pr
+
+  BE_server_runs_and_passes_tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install python dependencies
+        working-directory: server
+        run: |
+          pip install --upgrade pip
+          pip install -r dependencies.txt
+
+      - name: Generate secret key and security file
+        working-directory: server
+        run: python test/genSecurityFile.py --debug True
+
+      - name: Generate live database
+        working-directory: server
+        run: python manage.py migrate --database=live
+
+      - name: Run BE in background
+        working-directory: server
+        run: |
+          daphne nEDM_server.asgi:application &
+          sleep 1
+
+      - name: Unit tests
+        working-directory: server
+        run: pytest test
+
+  FE_builds_successfully:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install python dependencies
+        working-directory: server
+        run: |
+          pip install --upgrade pip
+          pip install -r dependencies.txt
+
+      - name: Generate secret key and security file
+        working-directory: server
+        run: python test/genSecurityFile.py --debug True
+
+      - name: Run BE in background
+        working-directory: server
+        run: |
+          daphne nEDM_server.asgi:application &
+
+      - name: Set up Node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Node dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Get schema from BE and generate Tsx file
+        working-directory: client
+        run: npm run generate
+
+      - name: Build FE
+        working-directory: client
+        run: npm run build
