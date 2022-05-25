@@ -92,7 +92,7 @@ jobs:
         working-directory: server
         run: pytest tests
 
-  FE_server_built:
+  FE_builds_successfully:
     runs-on: ubuntu-20.04
 
     steps:
