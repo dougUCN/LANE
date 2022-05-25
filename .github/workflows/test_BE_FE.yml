@@ -45,9 +45,12 @@ jobs:
         working-directory: server
         run: python manage.py migrate --database=live
 
-      - name: Start BE and run unit tests
+      - name: Start BE
         working-directory: server
         run: |
           daphne nEDM_server.asgi:application &
           sleep 2
+      
+      - name: Pytest on BE
+          working-directory: server
           pytest tests
