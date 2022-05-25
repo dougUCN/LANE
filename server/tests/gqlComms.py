@@ -81,45 +81,6 @@ def createHistogram(id, x, y, name, type, isLive):
     check_response_errors(response)
     return response
 
-def getHistogram(id):
-    '''kwargs get directly converted to strings'''
-    replacements = {'$ID':id}
-    query = """query getHistogram{
-                getHistogram( id: $ID){
-                        id
-                        name
-                        x
-                        y
-                        len
-                        type
-                        created
-                    }
-                }"""
-    query = make_replacements(query, replacements)
-    response = make_query(query)
-    check_response_errors(response)
-    return response
-
-def getHistograms(id, x, y, name, type, isLive):
-    '''kwargs get directly converted to strings'''
-    replacements = {'$ID':id, '$XDATA':x, '$YDATA':y,
-                    '$NAME': name, '$TYPE': type, '$ISLIVE': isLive}
-    query = """query getHistogram{
-                getHistograms(  isLive:false){
-                        id
-                        name
-                        x
-                        y
-                        len
-                        type
-                        created
-                    }
-                }"""
-    query = make_replacements(query, replacements)
-    response = make_query(query)
-    check_response_errors(response)
-    return response
-
 def updateHistogram(id, x, y, name, type, isLive):
     '''kwargs get directly converted to strings'''
     replacements = {'$ID':id, '$XDATA':x, '$YDATA':y,
