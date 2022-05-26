@@ -10,8 +10,11 @@ import {
   ReferenceArea,
   ResponsiveContainer,
 } from "recharts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearchMinus } from "@fortawesome/free-solid-svg-icons";
 import { LiveHistogram, Point } from "../../generated";
 import useChart from "./hooks/useChart";
+import Button from "../shared/Button";
 
 type Props = {
   liveHistogram: LiveHistogram | null;
@@ -41,29 +44,13 @@ const HistogramChart = ({ liveHistogram }: Props) => {
       className="highlight-bar-charts"
       style={{ userSelect: "none", width: "100%" }}
     >
-      <button
+      <Button
         type="button"
-        className={clsx(
-          "bg-neutral-500",
-          "text-white",
-          "active:bg-neutral-600",
-          "font-bold",
-          "uppercase",
-          "text-xs",
-          "px-4",
-          "py-2",
-          "rounded",
-          "shadow",
-          "hover:shadow-md",
-          "outline-none",
-          "focus:outline-none",
-          "mx-3",
-          "my-3",
-        )}
+        className={clsx("px-4", "py-2", "mx-3", "my-3")}
         onClick={() => zoomOut()}
       >
-        <i className="fas fa-search-minus"></i> Reset Zoom
-      </button>
+        <FontAwesomeIcon icon={faSearchMinus} /> Reset Zoom
+      </Button>
 
       <ResponsiveContainer width="100%" height={400}>
         <LineChart

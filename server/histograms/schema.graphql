@@ -9,11 +9,11 @@ type Histogram {
   - `type`: Additional meta data
   - `created`: Datetime when histogram was made in the database
   """
-  id: ID
+  id: ID!
   name: String
   data: [Point!]
-  xrange: Range
-  yrange: Range
+  xrange: Range!
+  yrange: Range!
   len: Int
   type: String
   created: Datetime
@@ -31,11 +31,11 @@ type LiveHistogram {
   - `type`: Additional meta data
   - `created`: Datetime when histogram was made in the database
   """
-  id: ID
+  id: ID!
   name: String
   data: [Point!]
-  xrange: Range
-  yrange: Range
+  xrange: Range!
+  yrange: Range!
   len: Int
   current: Point
   type: String

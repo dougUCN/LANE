@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typed-document-node": "^2.2.10",
     "@graphql-codegen/typescript": "^2.4.10",
@@ -34,6 +36,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint -- --fix",
+    "lint:pr": "eslint src/**/*.{ts,tsx} --fix-dry-run --max-warnings 0",
     "prettier": "prettier --write \"**/*.{ts,tsx,json,scss,md}\"",
     "generate": "graphql-codegen"
   },
