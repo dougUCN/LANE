@@ -5,7 +5,7 @@ import argparse
 import copy
 
 
-def test_createHist():
+def test_allFuncs():
     NUM = 100
     LENGTH = 50
     LOW = 0
@@ -40,6 +40,9 @@ def test_createHist():
     inputDict = copy.copy(params)
     responseDict = copy.copy(histogramData)
 
+    if overlap.len() == 0:
+        raise KeyError("error, No overlapping Keys input and response are different!")
+
     for key in responseDict.keys():
         if key not in overlap:
             del histogramData[key]
@@ -54,77 +57,3 @@ def test_createHist():
     deleteHistogram(new_id, False)
 
     assert np.amax(currentHists) != new_id
-
-
-"""
-
-
-
-def test_getHist():
-    NUM = 100
-    LENGTH = 50
-    LOW = 0
-    HIGH =1000
-    rng = np.random.default_rng()
-    now = datetime.datetime.now()
-    runHeader = now.strftime("%Y%m%d_run")
-    x = np.arange(LENGTH)
-    y = rng.integers(low=LOW, high=HIGH, size=LENGTH)
-
-    currentHists, response = listHistograms(isLive=False)
-    new_id = np.amax(currentHists) + 1
-
-    params ={
-            'id': new_id,
-            'data': toSvgCoords(x, y),
-            'xrange': {'min': x[0], 'max': x[-1]},
-            'yrange': {'min': LOW, 'max': HIGH},
-            'name': f'{runHeader}{id}',
-            'type': 'static_test',
-            'isLive': False,
-        }
-
-    histogramData = getHistogram(99).get('data').get('getHistogram')
-    for key in params.keys():
-        if params[key] != histogramData[key]
-            raise ValueError("data does not")
-    
-
-    if params != getHistogram(99):
-        raise ValueError(params.keys())
-
-    assert listHistograms()
-
-
-
-def test_deleteHist():
-    deleteHistogram(100,False)
-
-    assert listHistograms()
-
-    NUM = 100
-    LENGTH = 50
-    LOW = 0
-    HIGH =1000
-    rng = np.random.default_rng()
-    now = datetime.datetime.now()
-    runHeader = now.strftime("%Y%m%d_run")
-    x = np.arange(LENGTH)
-    y = rng.integers(low=LOW, high=HIGH, size=LENGTH)
-
-    currentHists, response = listHistograms(isLive=False)
-    new_id = np.amax(currentHists) + 1
-
-    params ={
-            'id': new_id,
-            'data': toSvgCoords(x, y),
-            'xrange': {'min': x[0], 'max': x[-1]},
-            'yrange': {'min': LOW, 'max': HIGH},
-            'name': f'{runHeader}{id}',
-            'type': 'static_test',
-            'isLive': False,
-        }
-
-
-    
-"""
