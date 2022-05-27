@@ -89,7 +89,7 @@ npm run generate
 and to run the FE
 
 ```
-npm start
+npm run dev
 ```
 
 # Contributing
