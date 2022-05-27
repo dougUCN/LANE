@@ -11,27 +11,12 @@ so we must evaluate the query set before returning
 
 
 @database_sync_to_async
-def _list_histograms(database_name):
-    return list(Histogram.objects.using(database_name).all().values_list('id', flat=True))
-
-
-@database_sync_to_async
 def _get_histogram(id, database_name):
     return Histogram.objects.using(database_name).get(id=id)
 
 
 @database_sync_to_async
 def _filter_histograms(ids, names, types, minDate, maxDate, isLive):
-    """Note: Does not allow one to automatically pull all histograms
-    from the static database without specifying at least some filters
-    as the static data database will get fairly large after years of running
-    """
-    if all([arg is None for arg in (ids, names, types, minDate, maxDate)]) and (isLive == False):
-        raise ValueError(
-            "At least one field filter must be specified\n\
-(isLive=False alone is not sufficient as that pulls too many histograms)"
-        )
-
     queryset = Histogram.objects.using(chooseDatabase(isLive)).all()
     if ids:
         queryset = queryset.filter(id__in=ids)
@@ -52,16 +37,6 @@ Queries
 """
 
 query = QueryType()
-
-
-@query.field("listHistograms")
-async def list_histograms(*_, isLive=False):
-    '''
-    Lists the IDs of all histograms in the database
-
-    If isLive, pulls from live database
-    '''
-    return await _list_histograms(database_name=chooseDatabase(isLive))
 
 
 @query.field("getHistogram")
