@@ -4,10 +4,14 @@ import { Link, Outlet } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
+import darkModeLogo from "/logo/lane-dark-no-bg-B.png";
+import lightModeLogo from "/logo/lane-light-no-bg.png";
 import StyledLink from "./StyledLink";
+import useDarkMode from "../../hooks/useDarkMode/useDarkMode";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isDark] = useDarkMode();
   return (
     <div>
       <nav
@@ -20,8 +24,8 @@ const Navbar = () => {
           "bg-white",
           "shadow-lg",
           "px-2",
-          "py-3",
-          "dark:bg-gray-800",
+          "py-1",
+          "dark:bg-dark-blue",
         )}
       >
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -38,22 +42,11 @@ const Navbar = () => {
             )}
           >
             <Link to="/ems">
-              <span
-                className={clsx(
-                  "text-gray-800",
-                  "dark:text-white",
-                  "text-xl",
-                  "font-bold",
-                  "leading-relaxed",
-                  "inline-block",
-                  "mr-4",
-                  "py-2",
-                  "whitespace-nowrap",
-                  "uppercase",
-                )}
-              >
-                LANE
-              </span>
+              <img
+                src={isDark ? darkModeLogo : lightModeLogo}
+                alt="Logo"
+                className="object-cover relative h-16 ml-auto"
+              />
             </Link>
             <button
               className={clsx(
@@ -76,7 +69,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
             >
               <FontAwesomeIcon
-                className="text-gray-800 dark:text-white"
+                className="text-dark-blue dark:text-white"
                 icon={faBars}
               />
             </button>

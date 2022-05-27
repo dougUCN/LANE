@@ -33,7 +33,7 @@ const EMS = () => {
       <div className="flex justify-center items-center mt-24">
         <div className="text-center">
           <FontAwesomeIcon
-            className="text-gray-800 mx-4 my-8 fa-4x"
+            className="text-dark-blue mx-4 my-8 fa-4x"
             icon={faHourglassEnd}
           />
           <p>No Histograms are currently running.</p>
