@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import darkModeLogo from "/logo/lane-dark-no-bg-B.png";
-import lightModeLogo from "/logo/lane-light-no-bg.png";
+import lightModeLogo from "/logo/lane-light.png";
 import StyledLink from "./StyledLink";
 import useDarkMode from "../../hooks/useDarkMode/useDarkMode";
 
