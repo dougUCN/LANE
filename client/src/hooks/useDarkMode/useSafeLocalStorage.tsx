@@ -1,3 +1,6 @@
+/** Example take from
+ *  https://github.com/jeffjadulco/jeffjadulco.com/blob/master/src/hooks/useSafeLocalStorage.ts
+ */
 import { useState } from "react";
 
 const useSafeLocalStorage = (key: string, initialValue?: string) => {

@@ -1,3 +1,6 @@
+/** Example taken from
+ *  https://github.com/jeffjadulco/jeffjadulco.com/blob/master/src/hooks/usePrefersDarkMode.ts
+ */
 import { useEffect, useState } from "react";
 
 const usePrefersDarkMode = () => {
