@@ -22,7 +22,7 @@ The `.gitmodules` file in the root dir indicates which folders are submodules.
 
 ### Github actions
 
-This project uses [Github Actions](https://docs.github.com/en/actions) to validate all pull requests
+This project uses [Github Actions](https://docs.github.com/en/actions) to validate all pull requests. To view the pipelines applied to this project, view either the `Actions` tab on Github, or see the yaml config files titled `.github/workflows/*.yml`
 
 ### Setting up the linting pre-commit hooks
 
@@ -38,7 +38,6 @@ chmod +x .git/modules/server/hooks/pre-commit
 ```
 
 **If you have only cloned either the FE or BE repo: ** you should have a normal `.git` folder from repo initialization. In the root directory of those repos, run
-
 ```
 cp .githooks/pre-commit .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
