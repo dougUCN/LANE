@@ -1,24 +1,20 @@
 # Contributing
 
-To contribute to the FE, open a pull request on [LANE_frontend](https://github.com/dougUCN/LANE_frontend)
+For contributors only interested in working on the frontend, please see the front end repository: [LANE_frontend](https://github.com/dougUCN/LANE_frontend)
 
-To contribute to the BE, open a pull request on [LANE_backend](https://github.com/dougUCN/LANE_backend)
+For contributors only interested in working on the frontend, please see the back end repository: [LANE_backend](https://github.com/dougUCN/LANE_backend)
 
 ### Working with FE and BE as submodules
 
-A submodule is essentially a reference to a specific commit in a branch in another repo. In this `client` points to the main branch of [LANE_frontend](https://github.com/dougUCN/LANE_frontend), and `server` points to the main branch of [LANE_backend](https://github.com/dougUCN/LANE_backend).
+A submodule is a reference to a specific commit in a branch in another repo: `client` points to the main branch of [LANE_frontend](https://github.com/dougUCN/LANE_frontend); `server` points to the main branch of [LANE_backend](https://github.com/dougUCN/LANE_backend).
 
-If the repository was cloned as in the [Readme](README.md) with the `--recurse-submodules` flag, then the FE and BE submodules will be populated with files. When working in `client`, this will be treated as if working directly in the FE repo. For example, `git branch` will display only branches in the FE repo, and `git push` will push staged files to the FE repo. Conversely, when in `server`, this will be treated as if working in the BE repo.
+When working in `client`, this will be treated as if working directly in the FE repo. For example, `git branch` will display only branches in the FE repo, and `git push` will push staged files to the FE repo. Conversely, when in `server`, this will be treated as if working in the BE repo. When working in the root LANE directory this will be treated as if working in the main LANE repo.
 
-Note that a submodule is only a reference to a specific commit. To update the main repo, create a new branch and run `git status` to see whether a submodule has new commits. Then run `git add... git commit ... git push` as usual.
-
-If `git status` is not showing changes, `git submodule update --remote --merge` will also update the submodule.
-
-If the repository is cloned without the `--recurse-submodules` flag, then the FE and BE submodule folders will not be populated with files.
+To update the main repo, from the root dir create a new branch and run `git status` to see whether a submodule has new commits. Then run `git add... git commit ... git push` as usual.
 
 The `.gitmodules` file in the root dir indicates which folders are submodules.
 
-**Note:** Do not move or delete the root submodule folder like a normal folder. You must use `git mv` or `git rm` so that the `.gitmodules` tracking gets appropriately updated. Then you must push a commit. Otherwise, tracking of the submodule will break.
+**Note:** Do not move or delete the root submodule folder like a normal folder. Use `git mv` or `git rm` so that the `.gitmodules` tracking gets appropriately updated before pushing a commit. Otherwise, submodule tracking will break.
 
 ### Github actions
 
@@ -26,7 +22,7 @@ This project uses [Github Actions](https://docs.github.com/en/actions) to valida
 
 ### Setting up the linting pre-commit hooks
 
-Assuming the LANE repo was cloned with the `--recurse-submodules` flag:
+Eslint is used to check the FE code, and [black](https://black.readthedocs.io/en/stable/) is utilized to check the BE code. Upon opening a pull request on `main`, linting checks will be applied with the same settings as the precommit.
 
 In the root directory, run the following commands:
 
@@ -37,24 +33,13 @@ chmod +x .git/modules/client/hooks/pre-commit
 chmod +x .git/modules/server/hooks/pre-commit
 ```
 
-**If you have only cloned either the FE or BE repo** you should have a normal `.git` folder from repo initialization. In the root directory of those repos, run
-
-```
-cp .githooks/pre-commit .git/hooks/pre-commit
-chmod +x .git/hooks/pre-commit
-```
-
-Eslint is used to check the FE code, and [python black](https://black.readthedocs.io/en/stable/) is utilized to check the BE code.
-
 To ensure that the eslint pre-commit check is running correctly, create a branch with a commit that contains a `console.log`. If the commit is passes with a warning `warning Unexpected console statement no-console` then the pre-commit is working.
 
-Please note that Eslint warnings will be considered as a hard error in the linting check by the Github Actions pipeline when a PR is opened.
+Please note that Eslint warnings will error in the linting check by the Github Actions pipeline when a PR is opened.
 
-To ensure that the black pre-commit check is running correctly, create a branch with a commit that contains `print "message"` (python2 syntax will cause black to throw an error). If the commit is unsuccessful with the message: `Fix python black errors and try again`, then the pre-commit is working correctly.
+To ensure that `black` pre-commit check is running correctly, create a branch with a commit that contains `print "message"` (python2 syntax will cause `black` to throw an error). If the commit is unsuccessful with the message: `Fix python black errors and try again`, then the pre-commit is working correctly.
 
-Note that the black checks the `pyproject.toml` file in the root directory of the folder passed to it for configuration settings
-
-Upon opening a pull request on `main`, linting checks will be applied with the same settings as the precommit
+Note that `black` checks the `pyproject.toml` file in the root directory of the folder passed to it for configuration settings
 
 ### Working with the GraphQL Client (URQL)
 

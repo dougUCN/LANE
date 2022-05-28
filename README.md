@@ -5,7 +5,7 @@
 Begin by cloning the repository:
 
 ```
-git clone https://github.com/dougUCN/LANL_nEDM.git --recurse-submodules
+git clone https://github.com/dougUCN/LANE.git --recurse-submodules
 ```
 
 **Note:** This project involves separate submodule repos for backend (BE) and frontend (FE).
