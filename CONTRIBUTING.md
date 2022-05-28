@@ -37,7 +37,7 @@ chmod +x .git/modules/client/hooks/pre-commit
 chmod +x .git/modules/server/hooks/pre-commit
 ```
 
-**If you have only cloned either the FE or BE repo: ** you should have a normal `.git` folder from repo initialization. In the root directory of those repos, run
+**If you have only cloned either the FE or BE repo** you should have a normal `.git` folder from repo initialization. In the root directory of those repos, run
 ```
 cp .githooks/pre-commit .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
