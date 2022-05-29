@@ -1,12 +1,12 @@
 # Contributing
 
-For contributors only interested in working on the frontend, please see the front end repository: [LANE_frontend](https://github.com/dougUCN/LANE_frontend)
+For contributors only interested in working on the frontend, please see the frontend repository: [LANE-client](https://github.com/dougUCN/LANE-client)
 
-For contributors only interested in working on the frontend, please see the back end repository: [LANE_backend](https://github.com/dougUCN/LANE_backend)
+For contributors only interested in working on the brontend, please see the backend repository: [LANE-server](https://github.com/dougUCN/LANE-server)
 
 ### Working with FE and BE as submodules
 
-A submodule is a reference to a specific commit in a branch in another repo: `client` points to the main branch of [LANE_frontend](https://github.com/dougUCN/LANE_frontend); `server` points to the main branch of [LANE_backend](https://github.com/dougUCN/LANE_backend).
+A submodule is a reference to a specific commit in a branch in another repo: `client` points to the main branch of [LANE-client](https://github.com/dougUCN/LANE-client); `server` points to the main branch of [LANE-server](https://github.com/dougUCN/LANE-server).
 
 When working in `client`, this will be treated as if working directly in the FE repo. For example, `git branch` will display only branches in the FE repo, and `git push` will push staged files to the FE repo. Conversely, when in `server`, this will be treated as if working in the BE repo. When working in the root LANE directory this will be treated as if working in the main LANE repo.
 
