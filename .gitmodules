@@ -1,3 +1,6 @@
-[submodule "nEDM_server/zmqLANL"]
-	path = server/slow_control_worker/zmqLANL
-	url = https://github.com/dougUCN/zmqLANL.git
+[submodule "server"]
+	path = server
+	url = https://github.com/dougUCN/LANE_backend.git
+[submodule "client"]
+	path = client
+	url = https://github.com/dougUCN/LANE_frontend.git
