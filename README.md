@@ -1,5 +1,13 @@
 # LANE (Los Alamos Neutron EDM)
 
+As of 05/30/2022, LANE has been split into two repositories
+
+[LANE Client](https://github.com/dougUCN/LANE-client)
+
+[LANE Server](https://github.com/dougUCN/LANE-server)
+
+Development on this repository has been stopped
+
 # Getting started
 
 Begin by cloning the repository:
